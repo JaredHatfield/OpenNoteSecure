@@ -4,25 +4,18 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     >
-    <Button 
+    
+	<TextView 
+		android:text="@string/app_header" 
+		android:id="@+id/TextViewHeader" 
+		android:layout_width="wrap_content" 
+		android:layout_height="wrap_content"
+		/>
+		
+	<Button 
 		android:text="@string/button_save" 
 		android:id="@+id/SaveButton" 
 		android:layout_width="wrap_content" 
 		android:layout_height="wrap_content"
 		/>
-		
-	<LinearLayout 
-		android:id="@+id/LinearLayout01" 
-		android:layout_width="wrap_content" 
-		android:layout_height="wrap_content"
-		>
-	</LinearLayout>
-	
-	<EditText 
-		android:text="@+id/EditText01"
-		android:id="@+id/EditText01"
-		android:layout_width="fill_parent"
-		android:layout_height="wrap_content"
-		/>
-
 </LinearLayout>

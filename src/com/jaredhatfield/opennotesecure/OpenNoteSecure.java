@@ -19,6 +19,7 @@ package com.jaredhatfield.opennotesecure;
 
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileFilter;
 import java.io.FileWriter;
 import java.io.IOException;
 import android.app.Activity;
@@ -37,34 +38,7 @@ public class OpenNoteSecure extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
         
-        Log.i(OpenNoteSecure.TAG, "Main application launch");
+       
         
-        // NOTE: This is just some test code
-        Button b = (Button) this.findViewById(R.id.SaveButton);
-        b.setOnClickListener(new View.OnClickListener()
-        {
-            public void onClick(View arg0)
-            {
-            	Log.i(OpenNoteSecure.TAG, "The button was clicked.");
-            	
-            	try {
-            	    File root = Environment.getExternalStorageDirectory();
-            	    if (root.canWrite()){
-            	        File thefile = new File(root, "testfile.txt");
-            	        Log.i(OpenNoteSecure.TAG, "Writing to: " + thefile.getAbsolutePath());
-            	        FileWriter filewriter = new FileWriter(thefile);
-            	        BufferedWriter output = new BufferedWriter(filewriter);
-            	        output.write("Hello world");
-            	        output.close();
-            	        filewriter.close();
-            	    }
-            	    else{
-            	    	Log.e(OpenNoteSecure.TAG, "The directory is not writable.");
-            	    }
-            	} catch (IOException e) {
-            	    Log.e(OpenNoteSecure.TAG, "Could not write file " + e.getMessage());
-            	}
-            }
-        });
     }
 }
