@@ -17,17 +17,8 @@
  */
 package com.jaredhatfield.opennotesecure;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileFilter;
-import java.io.FileWriter;
-import java.io.IOException;
 import android.app.Activity;
 import android.os.Bundle;
-import android.os.Environment;
-import android.util.Log;
-import android.view.View;
-import android.widget.Button;
 
 public class OpenNoteSecure extends Activity {
 	public static String TAG = "OpenNoteSecure";
@@ -37,8 +28,5 @@ public class OpenNoteSecure extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
-        
-       
-        
     }
 }
