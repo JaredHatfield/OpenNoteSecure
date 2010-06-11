@@ -66,10 +66,13 @@ public class FileBrowser extends ListActivity implements OnItemClickListener  {
 	}
 	
 	public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-		// When clicked, show a toast with the TextView text
+		// Deal with the click
+		File f = (File) parent.getItemAtPosition(position);
+		
 		try{
 			Intent i = new Intent(FileBrowser.this, OpenNoteSecure.class);
-        	FileBrowser.this.startActivity(i);
+			i.putExtra("file", f);
+			FileBrowser.this.startActivity(i);
 		}
 		catch(Exception e){
 			Log.e(OpenNoteSecure.TAG, "Intent could not be created." , e);

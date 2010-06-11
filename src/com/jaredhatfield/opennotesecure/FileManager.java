@@ -17,8 +17,10 @@
  */
 package com.jaredhatfield.opennotesecure;
 
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.FilenameFilter;
 import java.io.IOException;
@@ -84,28 +86,53 @@ public class FileManager {
 	/**
 	 * 
 	 * @param file
+	 * @param content
 	 */
-	public void writeFile(String file){
+	public void writeFile(File file, String content){
     	try {
-    	    File root = Environment.getExternalStorageDirectory();
-    	    
-    	    if (root.canWrite()){
-    	        File thefile = new File(root, file); // "testfile.txt"
-    	        Log.i(OpenNoteSecure.TAG, "Writing to: " + thefile.getAbsolutePath());
+    	    if (file.canWrite()){
+    	        Log.i(OpenNoteSecure.TAG, "Writing to: " + file.getAbsolutePath());
     	        
-    	        FileWriter filewriter = new FileWriter(thefile);
+    	        FileWriter filewriter = new FileWriter(file);
     	        BufferedWriter output = new BufferedWriter(filewriter);
-    	        output.write("Hello world");
+    	        output.write(content);
     	        output.close();
     	        filewriter.close();
     	    }
-    	    else{
-    	    	Log.e(OpenNoteSecure.TAG, "The directory is not writable.");
+    	    else {
+    	    	Log.e(OpenNoteSecure.TAG, "The file is not writable.");
     	    }
     	} 
     	catch (IOException e) {
-    	    Log.e(OpenNoteSecure.TAG, "Could not write file " + e.getMessage());
+    	    Log.e(OpenNoteSecure.TAG, "Could not write file ", e);
     	}
+	}
+	
+	public String readFile(File file){
+		String result = "";
+		
+		try {
+			if(file.canRead()){
+				FileReader filereader = new FileReader(file);
+				BufferedReader input = new BufferedReader(filereader);
+				String in = input.readLine();
+				while(in != null){
+					result += in + "\n";
+					in = input.readLine();
+				}
+				
+				input.close();
+				filereader.close();
+			}
+			else{
+				Log.e(OpenNoteSecure.TAG, "The file is not readable.");
+			}
+		}
+		catch(IOException e){
+			Log.e(OpenNoteSecure.TAG, "Could not read the file", e);
+		}
+		
+		return result;
 	}
 	
 	
