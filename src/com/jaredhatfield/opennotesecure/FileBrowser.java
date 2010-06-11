@@ -21,14 +21,15 @@ import java.io.File;
 import java.util.ArrayList;
 import android.app.ListActivity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.AdapterView;
-import android.widget.Toast;
 import android.widget.AdapterView.OnItemClickListener;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 
-public class FileBrowser extends ListActivity  {
+public class FileBrowser extends ListActivity implements OnItemClickListener  {
 	/**
 	 * 
 	 */
@@ -57,19 +58,24 @@ public class FileBrowser extends ListActivity  {
 		View v = mInflater.inflate(R.layout.newfile, null);
 		this.getListView().addHeaderView(v);
 		
-		//ArrayAdapter<File> adapter = new ArrayAdapter<File>()
+		// Add the ArrayAdapter to the ListView
 		this.setListAdapter(this.content);
-		//setListAdapter(new FileArrayAdapter(this, android.R.layout.simple_list_item_1, content));
-		// getListView().setTextFilterEnabled(true);
 		
-		
-		// Some dummy code that will show which button was pressed
-		this.getListView().setOnItemClickListener(new OnItemClickListener() {
-			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-				// When clicked, show a toast with the TextView text
-				FileViewHolder holder = (FileViewHolder)view.getTag();
-				Toast.makeText(getApplicationContext(), holder.getText().getText(), Toast.LENGTH_SHORT).show();
-		    }
-		});
+		// Add the listener that detects when the button was pressed
+		this.getListView().setOnItemClickListener(this);
 	}
+	
+	public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+		// When clicked, show a toast with the TextView text
+		try{
+			Intent i = new Intent(FileBrowser.this, OpenNoteSecure.class);
+        	FileBrowser.this.startActivity(i);
+		}
+		catch(Exception e){
+			Log.e(OpenNoteSecure.TAG, "Intent could not be created." , e);
+		}
+		
+		// FileViewHolder holder = (FileViewHolder)view.getTag();
+		// Toast.makeText(getApplicationContext(), holder.getText().getText(), Toast.LENGTH_SHORT).show();
+    }
 }

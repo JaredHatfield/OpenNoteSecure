@@ -8,14 +8,58 @@
 	<TextView 
 		android:text="@string/app_header" 
 		android:id="@+id/TextViewHeader" 
+		android:layout_width="fill_parent" 
+		android:layout_height="wrap_content"
+		android:enabled="false"
+		android:textSize="24sp"
+		android:textStyle="bold"
+		android:gravity="center_vertical|center_horizontal"
+		/>
+		
+	<TextView 
+		android:text="@string/text_file" 
+		android:layout_width="wrap_content" 
+		android:layout_height="wrap_content"
+		/>
+	
+	<EditText
+		android:id="@+id/EditTextFileName" 
+		android:layout_width="fill_parent" 
+		android:layout_height="wrap_content"
+		/>
+		
+	<TextView 
+		android:text="@string/text_algorithm" 
 		android:layout_width="wrap_content" 
 		android:layout_height="wrap_content"
 		/>
 		
+	<Spinner 
+		android:id="@+id/SpinnerAlgorithm" 
+		android:layout_width="fill_parent" 
+		android:layout_height="wrap_content"
+		/>
+	
+	<TextView 
+		android:text="@string/text_password" 
+		android:layout_width="wrap_content" 
+		android:layout_height="wrap_content"
+		/>
+	
+	<EditText
+		android:id="@+id/EditTextPassword" 
+		android:layout_width="fill_parent" 
+		android:layout_height="wrap_content"
+		/>
+	
 	<Button 
 		android:text="@string/button_save" 
 		android:id="@+id/SaveButton" 
 		android:layout_width="wrap_content" 
 		android:layout_height="wrap_content"
 		/>
+
+
+
+
 </LinearLayout>

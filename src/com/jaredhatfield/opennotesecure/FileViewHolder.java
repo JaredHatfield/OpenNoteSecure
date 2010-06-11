@@ -21,12 +21,12 @@ import android.widget.TextView;
 
 public class FileViewHolder {
 	/**
-	 * 
+	 * The text representation of the file.
 	 */
 	private TextView text;
 	
 	/**
-	 * 
+	 * Creates a new instance of FileViewHolder.
 	 */
 	public FileViewHolder(){
 		this.text = null;
