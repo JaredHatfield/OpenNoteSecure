@@ -20,17 +20,22 @@ package com.jaredhatfield.opennotesecure;
 import java.io.File;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-public class OpenNoteSecure extends Activity {
+public class OpenNoteSecure extends Activity implements OnClickListener {
 	/**
 	 * The tag that is used by the logger.
 	 */
 	public static String TAG = "OpenNoteSecure";
-	
+
 	/**
 	 * The file that will be used.
 	 */
@@ -51,6 +56,11 @@ public class OpenNoteSecure extends Activity {
 	 */
 	private TextView password;
 	
+	/**
+	 * 
+	 */
+	private Button open;
+	
     /** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -61,14 +71,45 @@ public class OpenNoteSecure extends Activity {
         this.filename = (TextView) this.findViewById(R.id.EditTextFileName);
         this.encryption = (Spinner) this.findViewById(R.id.SpinnerAlgorithm);
         this.password = (TextView) this.findViewById(R.id.EditTextPassword);
+        this.open = (Button) this.findViewById(R.id.ButtonOpen);
         
         // Get the information that was passed into the intent
         Bundle extras = this.getIntent().getExtras();
         this.file = (File) extras.getSerializable("file");
-        Log.i(OpenNoteSecure.TAG, file.getPath());
+        Log.i(OpenNoteSecure.TAG, "File: " + file.getPath());
         
         // Display the filename
         this.filename.setText(this.file.getName());
         this.filename.setEnabled(false);
+        
+        // Set up the spinners
+        ArrayAdapter<CharSequence> sadapter = ArrayAdapter.createFromResource(
+                this, R.array.encrytion_options, android.R.layout.simple_spinner_item);
+        sadapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        this.encryption.setAdapter(sadapter);
+        
+        // Subscribe the listen event to the open button
+        this.open.setOnClickListener(this);
     }
+
+    /**
+     * 
+     * @param view
+     */
+	@Override
+	public void onClick(View view) {
+		if(view.equals(this.open)){
+			Log.i(OpenNoteSecure.TAG, "The open button was clicked.");
+			
+			// Display the intent that will be used to edit the file
+			Intent i = new Intent(OpenNoteSecure.this, TextEditorDisplay.class);
+			i.putExtra("file", this.file);
+			i.putExtra("encryption", (String)this.encryption.getSelectedItem());
+			i.putExtra("password", this.password.getText().toString());
+			OpenNoteSecure.this.startActivity(i);
+		}
+		else{
+			Log.e(OpenNoteSecure.TAG, "An unknown button was clicked.");
+		}
+	}
 }

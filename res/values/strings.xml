@@ -2,12 +2,15 @@
 <resources>
     <string name="hello">Hello World, OpenNoteSecure!</string>
     <string name="app_name">OpenNoteSecure</string>
-<string name="button_save">Save</string>
-
-<string name="app_header">Open Note Secure</string>
-<string name="button_newfile">New File</string>
-<string name="button_open">Open File</string>
-<string name="text_file">File Name:</string>
-<string name="text_algorithm">Encryption Algorithm:</string>
-<string name="text_password">Password:</string>
+    <string name="button_save">Save</string>
+    <string name="app_header">Open Note Secure</string>
+    <string name="button_newfile">New File</string>
+    <string name="button_open">Open File</string>
+    <string name="text_file">File Name:</string>
+    <string name="text_algorithm">Encryption Algorithm:</string>
+    <string name="text_password">Password:</string>
+    <string-array name="encrytion_options">
+        <item>AES</item>
+        <item>DES</item>
+    </string-array>
 </resources>
