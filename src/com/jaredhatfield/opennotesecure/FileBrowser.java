@@ -22,14 +22,20 @@ import java.util.ArrayList;
 import android.app.ListActivity;
 import android.content.Context;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.widget.AdapterView;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
 import android.widget.AdapterView.OnItemClickListener;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 
-public class FileBrowser extends ListActivity implements OnItemClickListener  {
+public class FileBrowser extends ListActivity 
+	implements OnItemClickListener, OnClickListener  {
 	/**
 	 * 
 	 */
@@ -39,6 +45,16 @@ public class FileBrowser extends ListActivity implements OnItemClickListener  {
 	 * 
 	 */
 	private LayoutInflater mInflater;
+	
+	/**
+	 * 
+	 */
+	private EditText newFileEditText;
+	
+	/**
+	 * 
+	 */
+	private Button newFileButton;
 	
 	/**
 	 * 
@@ -57,6 +73,9 @@ public class FileBrowser extends ListActivity implements OnItemClickListener  {
 		// Add the header for adding new files
 		View v = mInflater.inflate(R.layout.newfile, null);
 		this.getListView().addHeaderView(v);
+		this.newFileEditText = (EditText)v.findViewById(R.id.EditTextNewFile);
+		this.newFileButton = (Button)v.findViewById(R.id.ButtonNewFile);
+		this.newFileButton.setOnClickListener(this);
 		
 		// Add the ArrayAdapter to the ListView
 		this.setListAdapter(this.content);
@@ -77,8 +96,57 @@ public class FileBrowser extends ListActivity implements OnItemClickListener  {
 		catch(Exception e){
 			Log.e(OpenNoteSecure.TAG, "Intent could not be created." , e);
 		}
-		
-		// FileViewHolder holder = (FileViewHolder)view.getTag();
-		// Toast.makeText(getApplicationContext(), holder.getText().getText(), Toast.LENGTH_SHORT).show();
     }
+	
+	/**
+     * 
+     * @param view
+     */
+	@Override
+	public void onClick(View view) {
+		if(view.equals(this.newFileButton)){
+			Log.i(OpenNoteSecure.TAG, "The new file button has been clicked.");
+			String filename = this.newFileEditText.getText().toString();
+			if(!filename.endsWith(".txt")){
+				filename += ".txt";
+			}
+			
+			Toast.makeText(getApplicationContext(), "Creating file " + filename, Toast.LENGTH_SHORT).show();
+			new CreateNewFile().execute(filename);
+		}
+		else{
+			Log.e(OpenNoteSecure.TAG, "An unknown button was clicked.");
+		}
+	}
+	
+	/**
+	 * 
+	 */
+	private class CreateNewFile extends AsyncTask<String, Boolean, String> {
+		/**
+		 * 
+		 */
+	     protected String doInBackground(String... files) {
+	         String filename  = files[0];
+	         try{
+	        	 FileManager.Instance().writeNewFile(filename);
+	         }
+	         catch(Exception e){
+	        	 Log.e(OpenNoteSecure.TAG, e.getMessage(), e);
+	         }
+	         
+	    	 return filename;
+	     }
+	     
+	     /**
+	      * 
+	      */
+	     protected void onPostExecute(String filename) {
+	    	 newFileButton.requestFocus();
+	    	 newFileEditText.getText().clear();
+	    	 
+	    	 Toast.makeText(getApplicationContext(), "Created " + filename, Toast.LENGTH_SHORT).show();
+	    	 FileManager.Instance().updateFileList(content);
+	     }
+	 }
 }

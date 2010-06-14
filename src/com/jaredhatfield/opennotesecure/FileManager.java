@@ -108,6 +108,25 @@ public class FileManager {
     	}
 	}
 	
+	/**
+	 * 
+	 * @param filename
+	 */
+	public void writeNewFile(String filename){
+		Log.i(OpenNoteSecure.TAG, "Will be creating " + filename);
+		File file = new File(this.root, filename);
+		try {
+			file.createNewFile();
+		} catch (IOException e) {
+			Log.e(OpenNoteSecure.TAG, "File could not be created");
+		}
+	}
+	
+	/**
+	 * 
+	 * @param file
+	 * @return
+	 */
 	public String readFile(File file){
 		String result = "";
 		
