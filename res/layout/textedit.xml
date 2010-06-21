@@ -15,11 +15,19 @@
 		android:textStyle="bold"
 		android:gravity="center_vertical|center_horizontal"
 		/>
-		
+	
+	<Button 
+		android:text="@string/button_save" 
+		android:id="@+id/ButtonSaveContent" 
+		android:layout_width="wrap_content" 
+		android:layout_height="wrap_content"
+		/>
+	
 	<EditText 
 		android:id="@+id/EditTextContent" 
 		android:layout_width="fill_parent" 
 		android:layout_height="wrap_content"
 	/>
 	
+
 </LinearLayout>

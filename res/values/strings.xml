@@ -2,7 +2,7 @@
 <resources>
     <string name="hello">Hello World, OpenNoteSecure!</string>
     <string name="app_name">OpenNoteSecure</string>
-    <string name="button_save">Save</string>
+    <string name="button_save">Save Content</string>
     <string name="app_header">Open Note Secure</string>
     <string name="button_newfile">New File</string>
     <string name="button_open">Open File</string>

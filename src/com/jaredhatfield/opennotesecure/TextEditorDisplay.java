@@ -18,12 +18,17 @@
 package com.jaredhatfield.opennotesecure;
 
 import java.io.File;
+import java.io.IOException;
 
 import android.app.Activity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.Button;
+import android.widget.EditText;
 
-public class TextEditorDisplay extends Activity {
+public class TextEditorDisplay extends Activity implements OnClickListener {
 	/**
 	 * 
 	 */
@@ -38,6 +43,18 @@ public class TextEditorDisplay extends Activity {
 	 * 
 	 */
 	private String password;
+	
+	/**
+	 * 
+	 */
+	private EditText content;
+	
+	/**
+	 * 
+	 */
+	private Button saveButton;
+	
+	int n = 0;
 	
 	/** Called when the activity is first created. */
     @Override
@@ -54,5 +71,28 @@ public class TextEditorDisplay extends Activity {
         Log.i(OpenNoteSecure.TAG, "Encryption: " + this.encryption);
         Log.i(OpenNoteSecure.TAG, "Password: " + this.password); // TODO: Remove this line!
         
+        // Get all of the local GUI elements
+        this.content = (EditText) this.findViewById(R.id.EditTextContent);
+        this.saveButton = (Button) this.findViewById(R.id.ButtonSaveContent);
+        this.saveButton.setOnClickListener(this);
+        
+        // Read in the file
+        // TODO: put this in an async task
+        this.content.setText(FileManager.Instance().readFile(this.file));
     }
+    
+    /**
+     * 
+     * @param view
+     */
+	@Override
+	public void onClick(View view) {
+		if(view.equals(this.saveButton)){
+			Log.i(OpenNoteSecure.TAG, "The save button has been clicked.");
+			FileManager.Instance().writeFile(this.file, this.content.getText().toString());
+		}
+		else{
+			Log.e(OpenNoteSecure.TAG, "An unknown button was clicked.");
+		}
+	}
 }
