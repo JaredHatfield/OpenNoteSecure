@@ -20,12 +20,14 @@ package com.jaredhatfield.opennotesecure;
 import java.io.File;
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 public class TextEditorDisplay extends Activity implements OnClickListener {
 	/**
@@ -94,14 +96,24 @@ public class TextEditorDisplay extends Activity implements OnClickListener {
 		if(view.equals(this.saveButton)){
 			Log.i(OpenNoteSecure.TAG, "The save button has been clicked.");
 			
-			// Display the progress dialog.
-	        ProgressDialog dialog = ProgressDialog.show(TextEditorDisplay.this, "", "Saving. Please wait...", true);
-	        dialog.setCancelable(false);
-	        dialog.show();
-	        
-			// Start the AsyncTask to save the file
-	        FileTaskHolder holder = new FileTaskHolder(this.file, this.encryption, this.password, dialog, this.content);
-	        new EncryptionTask().execute(holder);
+			if(this.content.isEnabled()){
+				// Display the progress dialog.
+		        ProgressDialog dialog = ProgressDialog.show(TextEditorDisplay.this, "", "Saving. Please wait...", true);
+		        dialog.setCancelable(false);
+		        dialog.show();
+		        
+				// Start the AsyncTask to save the file
+		        FileTaskHolder holder = new FileTaskHolder(this.file, this.encryption, this.password, dialog, this.content);
+		        new EncryptionTask().execute(holder);
+			}
+			else{
+				Context context = getApplicationContext();
+				CharSequence text = "Save disabled.";
+				int duration = Toast.LENGTH_SHORT;
+
+				Toast toast = Toast.makeText(context, text, duration);
+				toast.show();
+			}
 		}
 		else{
 			Log.e(OpenNoteSecure.TAG, "An unknown button was clicked.");

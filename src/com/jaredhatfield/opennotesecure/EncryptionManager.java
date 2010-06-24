@@ -34,19 +34,45 @@ import javax.crypto.spec.SecretKeySpec;
 import android.util.Log;
 
 public class EncryptionManager {
-	
+	/**
+	 * 
+	 */
     private static Cipher aesCipher;
+    
+    /**
+     * 
+     */
     private static SecretKey secretKey;
+    
+    /**
+     * 
+     */
     private static IvParameterSpec ivParameterSpec;
 
+    /**
+     * 
+     */
     private static String CIPHER_TRANSFORMATION = "AES/CBC/PKCS5Padding";
+    
+    /**
+     * 
+     */
     private static String CIPHER_ALGORITHM = "AES";
     
-    // Replace me with a 16-byte key
+    /**
+     * Will be replaced with 16 bit key
+     */
     private static byte[] rawSecretKey = {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00};
 
+    /**
+     * 
+     */
     private static String MESSAGEDIGEST_ALGORITHM = "MD5";
 
+    /**
+     * 
+     * @param passphrase
+     */
     public EncryptionManager(String passphrase) {
         byte[] passwordKey = encodeDigest(passphrase);
 
@@ -64,16 +90,32 @@ public class EncryptionManager {
         ivParameterSpec = new IvParameterSpec(rawSecretKey);
     }
     
+    /**
+     * 
+     * @param data
+     * @return
+     */
     public String encryptAsBase64(String data){
     	byte[] encryptedData = encrypt(data.getBytes());
         return Base64.encodeBytes(encryptedData);
     }
     
+    /**
+     * 
+     * @param data
+     * @return
+     * @throws IOException
+     */
     public String decryptAsBase64(String data) throws IOException{
     	byte[] decryptedData = decrypt(Base64.decode(data.getBytes()));
     	return new String(decryptedData);
     }
 
+    /**
+     * 
+     * @param clearData
+     * @return
+     */
     private byte[] decrypt(byte[] clearData) {
         try {
             aesCipher.init(Cipher.DECRYPT_MODE, secretKey, ivParameterSpec);
@@ -103,6 +145,11 @@ public class EncryptionManager {
         return decryptedData;
     }
     
+    /**
+     * 
+     * @param clearData
+     * @return
+     */
     private byte[] encrypt(byte[] clearData) {
         try {
             aesCipher.init(Cipher.ENCRYPT_MODE, secretKey, ivParameterSpec);
@@ -132,6 +179,11 @@ public class EncryptionManager {
         return encryptedData;
     }
 
+    /**
+     * 
+     * @param text
+     * @return
+     */
     private byte[] encodeDigest(String text) {
         MessageDigest digest;
         try {
@@ -144,5 +196,4 @@ public class EncryptionManager {
 
         return null;
     }
-
 }

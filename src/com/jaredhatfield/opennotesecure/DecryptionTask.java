@@ -20,7 +20,21 @@ public class DecryptionTask extends AsyncTask<FileTaskHolder, Void, FileTaskHold
 		}
 		else if(holder.getEncryption().equals("AES")){
 			Log.i(OpenNoteSecure.TAG, "Decrypting with Algorithm: AES");
-			Log.e(OpenNoteSecure.TAG, "Algoirthm not implemented");
+			String ciphertext = FileManager.Instance().readFile(holder.getFile());
+			if(ciphertext.length() > 0){
+				EncryptionManager em = new EncryptionManager(holder.getPassword());
+				try {
+					String plaintext = em.decryptAsBase64(ciphertext);
+					holder.setResult(plaintext);
+				} 
+				catch (Exception e) {
+					// The decryption failed so we will not set the result
+				}
+			}
+			else{
+				// The file is blank so we set the result to indicate the decryption didn't fail.
+				holder.setResult("");
+			}
 		}
 		else if(holder.getEncryption().equals("DES")){
 			Log.i(OpenNoteSecure.TAG, "Decrypting with Algorithm: DES");
@@ -44,8 +58,18 @@ public class DecryptionTask extends AsyncTask<FileTaskHolder, Void, FileTaskHold
 	@Override
     protected void onPostExecute(FileTaskHolder holder)
     {
+		// Add the plain text to the EditText
 		EditText content = holder.getEditTextContent();
-		content.setText(holder.getResult());
+		String result = holder.getResult();
+		if(result != null){
+			content.setText(result);
+		}
+		else{
+			content.setEnabled(false);
+			content.setText("Decryption failed.");
+		}
+		
+		// Dismiss the dialog
 		holder.getDialog().dismiss();
     }
 }

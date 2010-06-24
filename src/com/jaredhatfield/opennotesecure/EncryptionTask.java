@@ -19,7 +19,10 @@ public class EncryptionTask  extends AsyncTask<FileTaskHolder, Void, FileTaskHol
 		}
 		else if(holder.getEncryption().equals("AES")){
 			Log.i(OpenNoteSecure.TAG, "Encrypting with Algorithm: AES");
-			Log.e(OpenNoteSecure.TAG, "Algoirthm not implemented");
+			String plaintext = holder.getEditTextContent().getText().toString();
+			EncryptionManager em = new EncryptionManager(holder.getPassword());
+			String ciphertext = em.encryptAsBase64(plaintext);
+			FileManager.Instance().writeFile(holder.getFile(), ciphertext);
 		}
 		else if(holder.getEncryption().equals("DES")){
 			Log.i(OpenNoteSecure.TAG, "Encrypting with Algorithm: DES");
