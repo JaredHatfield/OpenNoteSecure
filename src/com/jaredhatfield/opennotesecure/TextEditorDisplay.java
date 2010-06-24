@@ -18,9 +18,8 @@
 package com.jaredhatfield.opennotesecure;
 
 import java.io.File;
-import java.io.IOException;
-
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -77,8 +76,13 @@ public class TextEditorDisplay extends Activity implements OnClickListener {
         this.saveButton.setOnClickListener(this);
         
         // Read in the file
-        // TODO: put this in an async task
-        this.content.setText(FileManager.Instance().readFile(this.file));
+        ProgressDialog dialog = ProgressDialog.show(TextEditorDisplay.this, "", "Decrypting. Please wait...", true);
+        dialog.setCancelable(false);
+        dialog.show();
+        
+        // Start the AsyncTask to decrypt the file
+        FileTaskHolder holder = new FileTaskHolder(this.file, this.encryption, this.password, dialog, this.content);
+        new DecryptionTask().execute(holder);
     }
     
     /**
