@@ -75,7 +75,7 @@ public class TextEditorDisplay extends Activity implements OnClickListener {
         this.saveButton = (Button) this.findViewById(R.id.ButtonSaveContent);
         this.saveButton.setOnClickListener(this);
         
-        // Read in the file
+        // Display the progress dialog
         ProgressDialog dialog = ProgressDialog.show(TextEditorDisplay.this, "", "Decrypting. Please wait...", true);
         dialog.setCancelable(false);
         dialog.show();
@@ -93,7 +93,15 @@ public class TextEditorDisplay extends Activity implements OnClickListener {
 	public void onClick(View view) {
 		if(view.equals(this.saveButton)){
 			Log.i(OpenNoteSecure.TAG, "The save button has been clicked.");
-			FileManager.Instance().writeFile(this.file, this.content.getText().toString());
+			
+			// Display the progress dialog.
+	        ProgressDialog dialog = ProgressDialog.show(TextEditorDisplay.this, "", "Saving. Please wait...", true);
+	        dialog.setCancelable(false);
+	        dialog.show();
+	        
+			// Start the AsyncTask to save the file
+	        FileTaskHolder holder = new FileTaskHolder(this.file, this.encryption, this.password, dialog, this.content);
+	        new EncryptionTask().execute(holder);
 		}
 		else{
 			Log.e(OpenNoteSecure.TAG, "An unknown button was clicked.");

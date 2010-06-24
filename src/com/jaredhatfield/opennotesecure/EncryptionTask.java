@@ -2,28 +2,27 @@ package com.jaredhatfield.opennotesecure;
 
 import android.os.AsyncTask;
 import android.util.Log;
-import android.widget.EditText;
 
-public class DecryptionTask extends AsyncTask<FileTaskHolder, Void, FileTaskHolder>{
+public class EncryptionTask  extends AsyncTask<FileTaskHolder, Void, FileTaskHolder>{
 
 	/**
-	 * Perform the task of decrypting the file.
+	 * Perform the task of encrypting and writing out the file.
 	 */
 	@Override
-	protected FileTaskHolder doInBackground(FileTaskHolder... arg0) {
-		FileTaskHolder holder = arg0[0];
+	protected FileTaskHolder doInBackground(FileTaskHolder... params) {
+		FileTaskHolder holder = params[0];
 		
-		// Read in and decrypt the file
+		// Encrypt and write out the file.
 		if(holder.getEncryption().equals("None")){
-			Log.i(OpenNoteSecure.TAG, "Decrypting with Algorithm: None");
-			holder.setResult(FileManager.Instance().readFile(holder.getFile()));
+			Log.i(OpenNoteSecure.TAG, "Encrypting with Algorithm: None");
+			FileManager.Instance().writeFile(holder.getFile(), holder.getEditTextContent().getText().toString());
 		}
 		else if(holder.getEncryption().equals("AES")){
-			Log.i(OpenNoteSecure.TAG, "Decrypting with Algorithm: AES");
+			Log.i(OpenNoteSecure.TAG, "Encrypting with Algorithm: AES");
 			Log.e(OpenNoteSecure.TAG, "Algoirthm not implemented");
 		}
 		else if(holder.getEncryption().equals("DES")){
-			Log.i(OpenNoteSecure.TAG, "Decrypting with Algorithm: DES");
+			Log.i(OpenNoteSecure.TAG, "Encrypting with Algorithm: DES");
 			Log.e(OpenNoteSecure.TAG, "Algoirthm not implemented");
 		}
 		
@@ -39,14 +38,11 @@ public class DecryptionTask extends AsyncTask<FileTaskHolder, Void, FileTaskHold
 	}
 	
 	/**
-	 * Load the decrypted content into the EditText box and dismiss the dialog.
+	 * Dismiss the dialog after the task is complete.
 	 */
 	@Override
     protected void onPostExecute(FileTaskHolder holder)
     {
-		EditText content = holder.getEditTextContent();
-		content.setText(holder.getResult());
 		holder.getDialog().dismiss();
     }
 }
-

@@ -7,32 +7,32 @@ import android.widget.EditText;
 
 public class FileTaskHolder {
 	/**
-	 * 
+	 * The file that is being manipulated.
 	 */
 	private File file;
 	
 	/**
-	 * 
+	 * The encryption that is being used.
 	 */
 	private String encryption;
 	
 	/**
-	 * 
+	 * The password for the file.
 	 */
 	private String password;
 	
 	/**
-	 * 
+	 * The dialog box that is currently displayed while the task is being performed.
 	 */
 	private ProgressDialog dialog;
 	
 	/**
-	 * 
+	 * The EditText that contains the text being manipulated.
 	 */
 	private EditText content;
 	
 	/**
-	 * 
+	 * Temporary storage for the result of the decryption.
 	 */
 	private String result;
 	
