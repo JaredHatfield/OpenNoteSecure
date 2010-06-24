@@ -25,12 +25,14 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.AdapterView.OnItemSelectedListener;
 
-public class OpenNoteSecure extends Activity implements OnClickListener {
+public class OpenNoteSecure extends Activity implements OnClickListener, OnItemSelectedListener {
 	/**
 	 * The tag that is used by the logger.
 	 */
@@ -87,6 +89,7 @@ public class OpenNoteSecure extends Activity implements OnClickListener {
                 this, R.array.encrytion_options, android.R.layout.simple_spinner_item);
         sadapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         this.encryption.setAdapter(sadapter);
+        this.encryption.setOnItemSelectedListener(this);
         
         // Subscribe the listen event to the open button
         this.open.setOnClickListener(this);
@@ -111,5 +114,26 @@ public class OpenNoteSecure extends Activity implements OnClickListener {
 		else{
 			Log.e(OpenNoteSecure.TAG, "An unknown button was clicked.");
 		}
+	}
+
+	/**
+	 * 
+	 */
+	@Override
+	public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
+		if(pos == 0){
+			this.password.setEnabled(false);
+		}
+		else{
+			this.password.setEnabled(true);
+		}
+	}
+
+	/**
+	 * 
+	 */
+	@Override
+	public void onNothingSelected(AdapterView<?> parent) {
+		this.password.setEnabled(false);
 	}
 }
