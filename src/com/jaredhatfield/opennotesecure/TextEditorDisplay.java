@@ -18,6 +18,11 @@
 package com.jaredhatfield.opennotesecure;
 
 import java.io.File;
+
+import com.jaredhatfield.opennotesecure.Tasks.DecryptionTask;
+import com.jaredhatfield.opennotesecure.Tasks.EncryptionTask;
+import com.jaredhatfield.opennotesecure.Tasks.FileTaskHolder;
+
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;

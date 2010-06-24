@@ -52,18 +52,18 @@ public class EncryptionManager {
     /**
      * 
      */
-    private static String CIPHER_TRANSFORMATION = "AES/CBC/PKCS5Padding";
-    
+    //private static String CIPHER_TRANSFORMATION = "AES/CBC/PKCS5Padding";
+    private static String CIPHER_TRANSFORMATION = "DES/CBC/PKCS5Padding";
     /**
      * 
      */
     private static String CIPHER_ALGORITHM = "AES";
     
     /**
-     * Will be replaced with 16 bit key
+     * Will be replaced with 16 byte key (128 bit)
      */
     private static byte[] rawSecretKey = {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00};
-
+    
     /**
      * 
      */
