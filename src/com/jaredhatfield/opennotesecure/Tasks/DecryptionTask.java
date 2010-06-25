@@ -17,9 +17,10 @@
  */
 package com.jaredhatfield.opennotesecure.Tasks;
 
-import com.jaredhatfield.opennotesecure.EncryptionManager;
 import com.jaredhatfield.opennotesecure.FileManager;
 import com.jaredhatfield.opennotesecure.OpenNoteSecure;
+import com.jaredhatfield.opennotesecure.EncryptionProviders.AESEncryptionProvider;
+import com.jaredhatfield.opennotesecure.EncryptionProviders.DESEncryptionProvider;
 
 import android.os.AsyncTask;
 import android.util.Log;
@@ -43,13 +44,14 @@ public class DecryptionTask extends AsyncTask<FileTaskHolder, Void, FileTaskHold
 			Log.i(OpenNoteSecure.TAG, "Decrypting with Algorithm: AES");
 			String ciphertext = FileManager.Instance().readFile(holder.getFile());
 			if(ciphertext.length() > 0){
-				EncryptionManager em = new EncryptionManager(holder.getPassword());
 				try {
-					String plaintext = em.decryptAsBase64(ciphertext);
+					AESEncryptionProvider aes = new AESEncryptionProvider(holder.getPassword());
+					String plaintext = aes.decryptAsBase64(ciphertext);
 					holder.setResult(plaintext);
 				} 
 				catch (Exception e) {
 					// The decryption failed so we will not set the result
+					Log.e(OpenNoteSecure.TAG, e.getMessage());
 				}
 			}
 			else{
@@ -59,7 +61,22 @@ public class DecryptionTask extends AsyncTask<FileTaskHolder, Void, FileTaskHold
 		}
 		else if(holder.getEncryption().equals("DES")){
 			Log.i(OpenNoteSecure.TAG, "Decrypting with Algorithm: DES");
-			Log.e(OpenNoteSecure.TAG, "Algoirthm not implemented");
+			String ciphertext = FileManager.Instance().readFile(holder.getFile());
+			if(ciphertext.length() > 0){
+				try {
+					DESEncryptionProvider des = new DESEncryptionProvider(holder.getPassword());
+					String plaintext = des.decryptAsBase64(ciphertext);
+					holder.setResult(plaintext);
+				} 
+				catch (Exception e) {
+					// The decryption failed so we will not set the result
+					Log.e(OpenNoteSecure.TAG, e.getMessage());
+				}
+			}
+			else{
+				// The file is blank so we set the result to indicate the decryption didn't fail.
+				holder.setResult("");
+			}
 		}
 		
 		// Wait so it looks like the task takes some time to complete

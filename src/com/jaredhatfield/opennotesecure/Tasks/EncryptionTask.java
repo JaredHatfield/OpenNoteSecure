@@ -17,9 +17,11 @@
  */
 package com.jaredhatfield.opennotesecure.Tasks;
 
-import com.jaredhatfield.opennotesecure.EncryptionManager;
 import com.jaredhatfield.opennotesecure.FileManager;
 import com.jaredhatfield.opennotesecure.OpenNoteSecure;
+import com.jaredhatfield.opennotesecure.EncryptionProviders.AESEncryptionProvider;
+import com.jaredhatfield.opennotesecure.EncryptionProviders.DESEncryptionProvider;
+import com.jaredhatfield.opennotesecure.EncryptionProviders.EncryptionException;
 
 import android.os.AsyncTask;
 import android.util.Log;
@@ -41,13 +43,28 @@ public class EncryptionTask  extends AsyncTask<FileTaskHolder, Void, FileTaskHol
 		else if(holder.getEncryption().equals("AES")){
 			Log.i(OpenNoteSecure.TAG, "Encrypting with Algorithm: AES");
 			String plaintext = holder.getEditTextContent().getText().toString();
-			EncryptionManager em = new EncryptionManager(holder.getPassword());
-			String ciphertext = em.encryptAsBase64(plaintext);
-			FileManager.Instance().writeFile(holder.getFile(), ciphertext);
+			try {
+				AESEncryptionProvider aes = new AESEncryptionProvider(holder.getPassword());
+				String ciphertext = aes.encryptAsBase64(plaintext);
+				FileManager.Instance().writeFile(holder.getFile(), ciphertext);
+			}
+			catch (EncryptionException e) {
+				// It didn't work!!
+				Log.e(OpenNoteSecure.TAG, e.getMessage());
+			}
 		}
 		else if(holder.getEncryption().equals("DES")){
 			Log.i(OpenNoteSecure.TAG, "Encrypting with Algorithm: DES");
-			Log.e(OpenNoteSecure.TAG, "Algoirthm not implemented");
+			String plaintext = holder.getEditTextContent().getText().toString();
+			try{
+				DESEncryptionProvider des = new DESEncryptionProvider(holder.getPassword());
+				String ciphertext = des.encryptAsBase64(plaintext);
+				FileManager.Instance().writeFile(holder.getFile(), ciphertext);
+			}
+			catch (EncryptionException e) {
+				// It didn't work!!
+				Log.e(OpenNoteSecure.TAG, e.getMessage());
+			}
 		}
 		
 		// Wait so it looks like the task takes some time to complete

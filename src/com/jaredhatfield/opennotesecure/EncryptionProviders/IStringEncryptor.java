@@ -17,6 +17,79 @@
  */
 package com.jaredhatfield.opennotesecure.EncryptionProviders;
 
-public abstract class IStringEncryptor {
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 
+import javax.crypto.Cipher;
+import javax.crypto.SecretKey;
+import javax.crypto.spec.IvParameterSpec;
+
+import android.util.Log;
+
+import com.jaredhatfield.opennotesecure.OpenNoteSecure;
+
+public abstract class IStringEncryptor {
+	/**
+	 * 
+	 */
+	protected Cipher cipher;
+    
+    /**
+     * 
+     */
+    protected SecretKey secretKey;
+    
+    /**
+     * 
+     */
+    protected IvParameterSpec ivParameterSpec;
+
+    /**
+     * 
+     */
+    protected String CIPHER_TRANSFORMATION;
+    
+    /**
+     * 
+     */
+    protected String CIPHER_ALGORITHM;
+    
+    /**
+     * 
+     */
+    protected String MESSAGEDIGEST_ALGORITHM;
+    
+	/**
+	 * 
+	 * @param data
+	 * @return
+	 * @throws EncryptionException
+	 */
+	public abstract String encryptAsBase64(String data) throws EncryptionException;
+	
+	/**
+	 * 
+	 * @param data
+	 * @return
+	 * @throws EncryptionException
+	 */
+	public abstract String decryptAsBase64(String data) throws EncryptionException;
+	
+	/**
+     * 
+     * @param text
+     * @return
+     */
+    protected byte[] encodeDigest(String text) {
+        MessageDigest digest;
+        try {
+            digest = MessageDigest.getInstance(MESSAGEDIGEST_ALGORITHM);
+            return digest.digest(text.getBytes());
+        } 
+        catch (NoSuchAlgorithmException e) {
+            Log.e(OpenNoteSecure.TAG, "No such algorithm " + MESSAGEDIGEST_ALGORITHM, e);
+        }
+
+        return null;
+    }
 }
