@@ -39,8 +39,8 @@ public class AESEncryptionProvider extends IStringEncryptor {
     protected static byte[] rawSecretKey = {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00};
     
     /**
-     * 
-     * @param passphrase
+     * Constructor for AESEncryptionProvider for a specific passphrase
+     * @param passphrase The phassphrase to protect the data with.
      * @throws EncryptionException 
      */
     public AESEncryptionProvider(String passphrase) throws EncryptionException {
@@ -71,9 +71,9 @@ public class AESEncryptionProvider extends IStringEncryptor {
     }
     
     /**
-     * 
-     * @param data
-     * @return
+     * Performs the encryption on a string of data.
+     * @param data The plain text to encrypt.
+     * @return The encrypted text encoded as a Base64 string.
      */
     public String encryptAsBase64(String data) throws EncryptionException{
     	byte[] encryptedData = encrypt(data.getBytes());
@@ -81,9 +81,9 @@ public class AESEncryptionProvider extends IStringEncryptor {
     }
     
     /**
-     * 
-     * @param data
-     * @return
+     * Performs the decryption on a Base64 encoded encrypted string.
+     * @param data The cipher text to decrypt.
+     * @return The plain text.
      * @throws IOException
      */
     public String decryptAsBase64(String data) throws EncryptionException{
@@ -97,12 +97,12 @@ public class AESEncryptionProvider extends IStringEncryptor {
     }
 
     /**
-     * 
-     * @param clearData
-     * @return
+     * Performs the AES decryption on a byte array.
+     * @param cipherData The cipher byte array.
+     * @return The plain text byte array.
      * @throws EncryptionException 
      */
-    private byte[] decrypt(byte[] clearData) throws EncryptionException {
+    private byte[] decrypt(byte[] cipherData) throws EncryptionException {
         try {
             cipher.init(Cipher.DECRYPT_MODE, secretKey, ivParameterSpec);
         } 
@@ -117,7 +117,7 @@ public class AESEncryptionProvider extends IStringEncryptor {
 
         byte[] decryptedData;
         try {
-        	decryptedData = cipher.doFinal(clearData);
+        	decryptedData = cipher.doFinal(cipherData);
         } 
         catch (IllegalBlockSizeException e) {
             Log.e(OpenNoteSecure.TAG, "Illegal block size", e);
@@ -132,9 +132,9 @@ public class AESEncryptionProvider extends IStringEncryptor {
     }
     
     /**
-     * 
-     * @param clearData
-     * @return
+     * Performs the AES encryption on a byte array.
+     * @param clearData The unencrypted byte array.
+     * @return The encrypted byte array.
      * @throws EncryptionException 
      */
     private byte[] encrypt(byte[] clearData) throws EncryptionException {
