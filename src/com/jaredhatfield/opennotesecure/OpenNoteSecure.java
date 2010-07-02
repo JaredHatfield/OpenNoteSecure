@@ -136,4 +136,29 @@ public class OpenNoteSecure extends Activity implements OnClickListener, OnItemS
 	public void onNothingSelected(AdapterView<?> parent) {
 		this.password.setEnabled(false);
 	}
+	
+	/**
+	 * Customize the back button action.
+	 */
+	@Override
+	public void onBackPressed() {
+	    Log.i(OpenNoteSecure.TAG, "The back button was pressed.");
+	    this.PerformCleanupAndClose();
+	    return;
+	}
+	
+	/**
+	 * Remove references to sensitive information and suggest the 
+	 * garbage collector runs before finishing the activity.
+	 */
+	private void PerformCleanupAndClose(){
+		// Remove all of the references to the sensitive variables
+		this.password.setText("");
+		
+		// Tell the system we want to run the garbage collector
+		System.gc();
+		
+		// Close this activity
+		this.finish();
+	}
 }

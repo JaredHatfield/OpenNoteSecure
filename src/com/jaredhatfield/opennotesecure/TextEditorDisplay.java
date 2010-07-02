@@ -60,7 +60,10 @@ public class TextEditorDisplay extends Activity implements OnClickListener {
 	 */
 	private Button saveButton;
 	
-	int n = 0;
+	/**
+	 * 
+	 */
+	private Button closeButton;
 	
 	/** Called when the activity is first created. */
     @Override
@@ -81,6 +84,8 @@ public class TextEditorDisplay extends Activity implements OnClickListener {
         this.content = (EditText) this.findViewById(R.id.EditTextContent);
         this.saveButton = (Button) this.findViewById(R.id.ButtonSaveContent);
         this.saveButton.setOnClickListener(this);
+        this.closeButton = (Button) this.findViewById(R.id.ButtonCloseContent);
+        this.closeButton.setOnClickListener(this);
         
         // Display the progress dialog
         ProgressDialog dialog = ProgressDialog.show(TextEditorDisplay.this, "", "Decrypting. Please wait...", true);
@@ -120,8 +125,38 @@ public class TextEditorDisplay extends Activity implements OnClickListener {
 				toast.show();
 			}
 		}
+		else if(view.equals(this.closeButton)){
+			Log.i(OpenNoteSecure.TAG, "The close button has been clicked.");
+			this.PerformCleanupAndClose();
+		}
 		else{
 			Log.e(OpenNoteSecure.TAG, "An unknown button was clicked.");
 		}
+	}
+	
+	/**
+	 * Customize the back button action.
+	 */
+	@Override
+	public void onBackPressed() {
+	    Log.i(OpenNoteSecure.TAG, "The back button was pressed.");
+	    this.PerformCleanupAndClose();
+	    return;
+	}
+	
+	/**
+	 * Remove references to sensitive information and suggest the 
+	 * garbage collector runs before finishing the activity.
+	 */
+	private void PerformCleanupAndClose(){
+		// Remove all of the references to the sensitive variables
+		this.content.setText("");
+		this.password = "";
+		
+		// Tell the system we want to run the garbage collector
+		System.gc();
+		
+		// Close this activity
+		this.finish();
 	}
 }
