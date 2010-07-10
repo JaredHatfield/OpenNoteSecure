@@ -11,13 +11,9 @@
             </intent-filter>
         </activity>
 		
-		<activity android:name=".OpenNoteSecure"
-                  android:label="@string/app_name">
-        </activity>
-        
-        <activity android:name=".TextEditorDisplay"
-                  android:label="@string/app_name">
-        </activity>
+		<activity android:name=".OpenNoteSecure" android:label="@string/app_name" />
+        <activity android:name=".TextEditorDisplay" android:label="@string/app_name" />
+        <activity android:name=".HelpView" android:label="@string/app_name" />
         
     </application>
     <uses-sdk android:minSdkVersion="4" />

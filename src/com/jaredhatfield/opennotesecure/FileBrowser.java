@@ -31,6 +31,9 @@ import android.widget.Toast;
 import android.widget.AdapterView.OnItemClickListener;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 
@@ -84,6 +87,9 @@ public class FileBrowser extends ListActivity
 		this.getListView().setOnItemClickListener(this);
 	}
 	
+	/**
+	 * 
+	 */
 	public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 		// Deal with the click
 		File f = (File) parent.getItemAtPosition(position);
@@ -117,6 +123,38 @@ public class FileBrowser extends ListActivity
 		else{
 			Log.e(OpenNoteSecure.TAG, "An unknown button was clicked.");
 		}
+	}
+	
+	/**
+	 * Add the menu items to this activity.
+	 */
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+	    MenuInflater inflater = getMenuInflater();
+	    inflater.inflate(R.menu.main_menu, menu);
+	    return true;
+	}
+	
+	/**
+	 * Process the clicks from the menu.
+	 */
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		// Handle item selection
+	    switch (item.getItemId()) {
+	    case R.id.menu_item_help:
+	    	try{
+				Intent i = new Intent(FileBrowser.this, HelpView.class);
+				FileBrowser.this.startActivity(i);
+			}
+			catch(Exception e){
+				Log.e(OpenNoteSecure.TAG, "Intent could not be created." , e);
+			}
+			
+	        return true;
+	    default:
+	        return super.onOptionsItemSelected(item);
+	    }
 	}
 	
 	/**

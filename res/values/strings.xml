@@ -15,4 +15,7 @@
         <item>AES</item>
         <item>DES</item>
     </string-array>
+	<string name="menu_help">Help</string>
+	<string name="menu_help_s1_head">What is OpenNoteSecure?</string>
+	<string name="menu_help_s1_body">OpenNoteSecure is a simple application for encrypting text files using AES or DES encryption.</string>
 </resources>

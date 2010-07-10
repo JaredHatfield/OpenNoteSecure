@@ -23,6 +23,9 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
@@ -145,6 +148,38 @@ public class OpenNoteSecure extends Activity implements OnClickListener, OnItemS
 	    Log.i(OpenNoteSecure.TAG, "The back button was pressed.");
 	    this.PerformCleanupAndClose();
 	    return;
+	}
+	
+	/**
+	 * Add the menu items to this activity.
+	 */
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+	    MenuInflater inflater = getMenuInflater();
+	    inflater.inflate(R.menu.main_menu, menu);
+	    return true;
+	}
+	
+	/**
+	 * Process the clicks from the menu.
+	 */
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		// Handle item selection
+	    switch (item.getItemId()) {
+	    case R.id.menu_item_help:
+	    	try{
+				Intent i = new Intent(OpenNoteSecure.this, HelpView.class);
+				OpenNoteSecure.this.startActivity(i);
+			}
+			catch(Exception e){
+				Log.e(OpenNoteSecure.TAG, "Intent could not be created." , e);
+			}
+			
+	        return true;
+	    default:
+	        return super.onOptionsItemSelected(item);
+	    }
 	}
 	
 	/**
