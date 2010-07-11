@@ -26,7 +26,7 @@ import com.jaredhatfield.opennotesecure.EncryptionProviders.EncryptionException;
 import android.os.AsyncTask;
 import android.util.Log;
 
-public class EncryptionTask  extends AsyncTask<FileTaskHolder, Void, FileTaskHolder>{
+public class EncryptionTask extends AsyncTask<FileTaskHolder, Void, FileTaskHolder>{
 
 	/**
 	 * Perform the task of encrypting and writing out the file.
