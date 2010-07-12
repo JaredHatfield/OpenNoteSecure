@@ -1,0 +1,33 @@
+<html>
+	<head>
+		<style type="text/css">
+			body { background-color:black; color:white; }
+			h1, h2 { border-bottom-style:solid; }
+			h2 { margin-top:40px; }
+		</style>
+	</head>
+	<body>
+		<h1>Help</h1>
+		<p>OpenNoteSecure is a simple application for encrypting text files using AES or DES encryption.</p>
+		
+		<h2>Instructions</h2>
+		<p>First, you need to select an existing text file or create a new file.  Once you have selected a file, you need to choose an encryption algorithm.</p>
+		<p>The default choice is no encryption which does not require a password.  Once you select an algorithm and enter in a password, OpenNoteSecure will attempt to decrypt the file.  If the file is empty you will be able to add text to the file which will be encrypted.</p>
+		<p>After you have finished editing the text, you must save before backing out.  The text will be saved using the algorithm and password previously specified</p>
+		
+		<h2>Releases</h2>
+		<h3>Version 1.0.2</h3>
+		<ul>
+			<li>Added the ability to delete files.</li>
+			<li>Added the help menu that includes instructions and version information.</li>
+		</ul>
+		<h3>Version 1.0.1</h3>
+		<ul>
+			<li>When backing out of the text editor and algorithm selection screen, sensitive information such as the decrypted text and password is cleared and the garbage collector is invoked.</li>
+		</ul>
+		<h3>Version 1.0.0</h3>
+		<ul>
+			<li>The initial release of OpenNoteSecure that includes the ability to encrypt and decrypt AES and DES text files.</li>
+		</ul>
+	</body>
+</html>

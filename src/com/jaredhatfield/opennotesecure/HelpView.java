@@ -19,6 +19,7 @@ package com.jaredhatfield.opennotesecure;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.webkit.WebView;
 
 public class HelpView extends Activity {
 	
@@ -27,5 +28,9 @@ public class HelpView extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.help);
+        
+        // Load the HTML
+        WebView wv = (WebView) findViewById(R.id.webview_help);	    
+	    wv.loadUrl("file:///android_asset/help.html");
     }
 }
