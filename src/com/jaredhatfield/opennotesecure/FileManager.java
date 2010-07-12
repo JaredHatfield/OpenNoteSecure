@@ -112,14 +112,19 @@ public class FileManager {
 	 * 
 	 * @param filename
 	 */
-	public void writeNewFile(String filename){
+	public Boolean writeNewFile(String filename){
 		Log.i(OpenNoteSecure.TAG, "Will be creating " + filename);
 		File file = new File(this.root, filename);
 		try {
-			file.createNewFile();
+			if(!file.exists()){
+				file.createNewFile();
+				return true;
+			}
 		} catch (IOException e) {
 			Log.e(OpenNoteSecure.TAG, "File could not be created");
 		}
+		
+		return false;
 	}
 	
 	/**

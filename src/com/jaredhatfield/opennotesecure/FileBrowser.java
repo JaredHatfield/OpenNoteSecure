@@ -243,7 +243,15 @@ public class FileBrowser extends ListActivity
 	     protected String doInBackground(String... files) {
 	         String filename  = files[0];
 	         try{
-	        	 FileManager.Instance().writeNewFile(filename);
+	        	 if(!filename.equals(".txt")){
+	        		 Boolean result = FileManager.Instance().writeNewFile(filename);
+	        		 if(!result){
+	        			 filename = null;
+	        		 }
+	        	 }
+	        	 else{
+	        		 filename = null;
+	        	 }
 	         }
 	         catch(Exception e){
 	        	 Log.e(OpenNoteSecure.TAG, e.getMessage(), e);
@@ -256,11 +264,18 @@ public class FileBrowser extends ListActivity
 	      * Notify the user the file was created and update the ArrayAdapter.
 	      */
 	     protected void onPostExecute(String filename) {
-	    	 newFileButton.requestFocus();
-	    	 newFileEditText.getText().clear();
-	    	 
-	    	 Toast.makeText(getApplicationContext(), "Created " + filename, Toast.LENGTH_SHORT).show();
-	    	 FileManager.Instance().updateFileList(content);
+	    	 if(filename == null){
+	    		 // The file was not created
+	    		 Toast.makeText(getApplicationContext(), "File was not created.", Toast.LENGTH_SHORT).show();
+	    	 }
+	    	 else{
+	    		 // The file was created
+		    	 newFileButton.requestFocus();
+		    	 newFileEditText.getText().clear();
+		    	 
+		    	 Toast.makeText(getApplicationContext(), "Created " + filename, Toast.LENGTH_SHORT).show();
+		    	 FileManager.Instance().updateFileList(content);
+	    	 }
 	     }
 	 }
 }
