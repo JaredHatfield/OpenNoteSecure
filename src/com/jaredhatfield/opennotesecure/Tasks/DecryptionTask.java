@@ -26,6 +26,10 @@ import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.EditText;
 
+/**
+ * Performs decryption using an AsyncTask.
+ * @author Jared Hatfield
+ */
 public class DecryptionTask extends AsyncTask<FileTaskHolder, Void, FileTaskHolder>{
 
 	/**

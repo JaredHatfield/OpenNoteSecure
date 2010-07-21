@@ -40,37 +40,40 @@ import android.view.View;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.View.OnClickListener;
 
-public class FileBrowser extends ListActivity 
-	implements OnItemClickListener, OnClickListener  {
+/**
+ * The activity that lists all of the files.
+ * @author Jared Hatfield
+ */
+public class FileBrowser extends ListActivity implements OnItemClickListener, OnClickListener  {
+	
 	/**
-	 * 
+	 * The array adapter that lists all of the files
 	 */
 	private FileArrayAdapter content;
 	
 	/**
-	 * 
+	 * The layout inflater.
 	 */
 	private LayoutInflater mInflater;
 	
 	/**
-	 * 
+	 * The EditText that contains the name for new files.
 	 */
 	private EditText newFileEditText;
 	
 	/**
-	 * 
+	 * The Button that is used to create new files.
 	 */
 	private Button newFileButton;
 	
 	/**
-	 * 
+	 * Initializes the FileBrowser.
+	 * @param savedInstanceState The saved state of the application.
 	 */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
-		this.content = new FileArrayAdapter(this, android.R.layout.simple_list_item_1,
-				new ArrayList<File>());
+		this.content = new FileArrayAdapter(this, android.R.layout.simple_list_item_1, new ArrayList<File>());
 		FileManager.Instance().updateFileList(this.content);
-		
 		super.onCreate(savedInstanceState);
 		
 		// Get the layout inflater
@@ -84,7 +87,6 @@ public class FileBrowser extends ListActivity
 		this.newFileButton.setOnClickListener(this);
 		
 		// Add the ArrayAdapter to the ListView
-		//this.setListAdapter(this.content);
 		this.getListView().setAdapter(this.content);
 		
 		// Add the listener that detects when the button was pressed
@@ -95,13 +97,18 @@ public class FileBrowser extends ListActivity
 	}
 	
 	/**
-	 * 
+	 * Called when an item in the list view is clicked.
+	 * @param parent The adapter view.
+	 * @param view The view that was clicked.
+	 * @param position The position of the item.
+	 * @param id The id of the item.
 	 */
 	public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 		// Deal with the click
 		File f = (File) parent.getItemAtPosition(position);
 		
 		try{
+			// Display the interface for picking an algorithm and providing a password
 			Intent i = new Intent(FileBrowser.this, OpenNoteSecure.class);
 			i.putExtra("file", f);
 			FileBrowser.this.startActivity(i);
@@ -112,28 +119,32 @@ public class FileBrowser extends ListActivity
     }
 	
 	/**
-     * 
-     * @param view
+     * Deal with a button click.
+     * @param view The view that was clicked.
      */
 	@Override
 	public void onClick(View view) {
 		if(view.equals(this.newFileButton)){
+			// The new file button was clicked
 			Log.i(OpenNoteSecure.TAG, "The new file button has been clicked.");
 			String filename = this.newFileEditText.getText().toString();
 			if(!filename.endsWith(".txt")){
 				filename += ".txt";
 			}
 			
-			Toast.makeText(getApplicationContext(), "Creating file " + filename, Toast.LENGTH_SHORT).show();
+			// Create a new file
 			new CreateNewFile().execute(filename);
 		}
 		else{
+			// No idea what button was clicked!
 			Log.e(OpenNoteSecure.TAG, "An unknown button was clicked.");
 		}
 	}
 	
 	/**
 	 * Add the menu items to this activity.
+	 * @param menu The menu to create.
+	 * @return True if the menu was created.
 	 */
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -144,12 +155,15 @@ public class FileBrowser extends ListActivity
 	
 	/**
 	 * Process the clicks from the menu.
+	 * @param item The menu item that was clicked.
+	 * @return True if the item was selected.
 	 */
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		// Handle item selection
 	    switch (item.getItemId()) {
 	    case R.id.menu_item_help:
+	    	// The help menu that was clicked
 	    	try{
 				Intent i = new Intent(FileBrowser.this, HelpView.class);
 				FileBrowser.this.startActivity(i);
@@ -160,23 +174,29 @@ public class FileBrowser extends ListActivity
 			
 	        return true;
 	    default:
+	    	// No clue which item was clicked
 	        return super.onOptionsItemSelected(item);
 	    }
 	}
 	
 	/**
 	 * Display the context menu for a specific item.
+	 * @param menu The context menu.
+	 * @param v The view.
+	 * @param menuInfo THe context menu info.
 	 */
 	@Override
 	public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
-	  super.onCreateContextMenu(menu, v, menuInfo);
-	  MenuInflater inflater = getMenuInflater();
-	  inflater.inflate(R.menu.edit_menu, menu);
-	  Log.i(OpenNoteSecure.TAG, "onCreateContextMenu");
+		super.onCreateContextMenu(menu, v, menuInfo);
+		MenuInflater inflater = getMenuInflater();
+		inflater.inflate(R.menu.edit_menu, menu);
+		Log.i(OpenNoteSecure.TAG, "onCreateContextMenu");
 	}
 	
 	/**
 	 * Perform the action specified in the context menu.
+	 * @param item The menu item.
+	 * @return True if the item was selected
 	 */
 	@Override
 	public boolean onContextItemSelected(MenuItem item) {
@@ -187,21 +207,26 @@ public class FileBrowser extends ListActivity
 	    // Determine which button was clicked
 		switch (item.getItemId()) {
 			case R.id.menu_item_delete:
+				// Delete the selected file
 				new DeleteFileTask().execute(f);
 				Log.i(OpenNoteSecure.TAG, "Delete button pressed");
 				return true;
 			default:
+				// No clue what was clicked
 				return super.onContextItemSelected(item);
 		}
 	}
 	
 	/**
-	 * Perform a file deletion.
+	 * Performs the task of deleting a file.
+	 * @author Jared Hatfield
 	 */
 	private class DeleteFileTask extends AsyncTask<File, Void, String>{
 
 		/**
 		 * Delete the file.
+		 * @param params The file.
+		 * @return The file name if it was created; otherwise null.
 		 */
 		@Override
 		protected String doInBackground(File... params) {
@@ -219,26 +244,33 @@ public class FileBrowser extends ListActivity
 		
 		/**
 	      * Notify the user the file was deleted and update the ArrayAdapter.
+	      * @param filename The file name; null if file was not created.
 	      */
 	     protected void onPostExecute(String filename) {
 	    	 Log.i(OpenNoteSecure.TAG, "Delete onPostExecute");
 	    	 if(filename != null){
+	    		 // The file was created, notify the user and update the list
 	    		 Toast.makeText(getApplicationContext(), "Deleted " + filename, Toast.LENGTH_SHORT).show();
 	    		 FileManager.Instance().updateFileList(content);
 	    	 }
 	    	 else{
+	    		 // The file was not created successfully
 	    		 Toast.makeText(getApplicationContext(), "Error: " + filename + " not deleted.", Toast.LENGTH_SHORT).show();
 	    	 }
 	     }
 
 	}
 	
+
 	/**
-	 * Creates a new file.
+	 * Performs the task of creating a new file.
+	 * @author Jared Hatfield
 	 */
 	private class CreateNewFile extends AsyncTask<String, Boolean, String> {
 		/**
 		 * Create the new file with the specified name.
+		 * @param files The name of the file to create.
+		 * @return The file name that was created.
 		 */
 	     protected String doInBackground(String... files) {
 	         String filename  = files[0];
@@ -246,15 +278,18 @@ public class FileBrowser extends ListActivity
 	        	 if(!filename.equals(".txt")){
 	        		 Boolean result = FileManager.Instance().writeNewFile(filename);
 	        		 if(!result){
+	        			 // If the file was not created we mark this down
 	        			 filename = null;
 	        		 }
 	        	 }
 	        	 else{
+	        		 // Do not create a file that has no name
 	        		 filename = null;
 	        	 }
 	         }
 	         catch(Exception e){
 	        	 Log.e(OpenNoteSecure.TAG, e.getMessage(), e);
+	        	 filename = null;
 	         }
 	         
 	    	 return filename;
@@ -262,6 +297,7 @@ public class FileBrowser extends ListActivity
 	     
 	     /**
 	      * Notify the user the file was created and update the ArrayAdapter.
+	      * @param filename The name of the file that was created or null on failure.
 	      */
 	     protected void onPostExecute(String filename) {
 	    	 if(filename == null){
@@ -273,7 +309,10 @@ public class FileBrowser extends ListActivity
 		    	 newFileButton.requestFocus();
 		    	 newFileEditText.getText().clear();
 		    	 
+		    	 // Notify the user the file was created
 		    	 Toast.makeText(getApplicationContext(), "Created " + filename, Toast.LENGTH_SHORT).show();
+		    	 
+		    	 // Update the array array adapter
 		    	 FileManager.Instance().updateFileList(content);
 	    	 }
 	     }

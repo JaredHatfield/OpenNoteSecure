@@ -22,7 +22,13 @@ import java.io.File;
 import android.app.ProgressDialog;
 import android.widget.EditText;
 
+/**
+ * An object that contains the important information passed 
+ * in and out of an EncryptionTask and DecryptionTask.
+ * @author Jared Hatfield
+ */
 public class FileTaskHolder {
+	
 	/**
 	 * The file that is being manipulated.
 	 */
@@ -54,12 +60,12 @@ public class FileTaskHolder {
 	private String result;
 	
 	/**
-	 * 
-	 * @param file
-	 * @param encryption
-	 * @param password
-	 * @param dialog
-	 * @param content
+	 * Creates a new instance of a FileTaskHolder.
+	 * @param file The file that is being manipulated.
+	 * @param encryption The type of encryption being used.
+	 * @param password The password for using the encryption.
+	 * @param dialog The dialog message box that will be removed.
+	 * @param content The EditText that contains the plan text content.
 	 */
 	public FileTaskHolder(File file, String encryption, String password, ProgressDialog dialog, EditText content){
 		this.file = file;
@@ -71,56 +77,56 @@ public class FileTaskHolder {
 	}
 	
 	/**
-	 * 
-	 * @return
+	 * Gets the file.
+	 * @return The file.
 	 */
 	public File getFile(){
 		return this.file;
 	}
 	
 	/**
-	 * 
-	 * @return
+	 * Gets the encryption being used.
+	 * @return A string representation of encryption being used.
 	 */
 	public String getEncryption(){
 		return this.encryption;
 	}
 	
 	/**
-	 * 
-	 * @return
+	 * Gets the password.
+	 * @return The password.
 	 */
 	public String getPassword(){
 		return this.password;
 	}
 	
 	/**
-	 * 
-	 * @return
+	 * Gets the dialog.
+	 * @return The dialog.
 	 */
 	public ProgressDialog getDialog(){
 		return this.dialog;
 	}
 	
 	/**
-	 * 
-	 * @return
+	 * Gets the plain text.
+	 * @return The plain text.
 	 */
 	public EditText getEditTextContent(){
 		return this.content;
 	}
 	
 	/**
-	 * 
-	 * @return
+	 * Gets the result.
+	 * @return True if the encryption/decryption was successful; otherwise false.
 	 */
 	public String getResult(){
 		return this.result;
 	}
 	
 	/**
-	 * 
-	 * @param result
+	 * Sets the result.
+	 * @param result True if the encryption/decryption was successful; otherwise false.
 	 */
 	public void setResult(String result){
 		this.result = result;

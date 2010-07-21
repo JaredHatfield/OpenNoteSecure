@@ -24,9 +24,14 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.FilenameFilter;
 import java.io.IOException;
+
 import android.os.Environment;
 import android.util.Log;
 
+/**
+ * Provides an interface for performing common file manipulations.
+ * @author Jared Hatfield
+ */
 public class FileManager {
 	
 	/**
@@ -40,7 +45,7 @@ public class FileManager {
 	private File root;
 	
 	/**
-	 * The singleton accessor for the FileManager
+	 * Gets the singleton instance of FileManager.
 	 * @return
 	 */
 	public static FileManager Instance(){
@@ -52,15 +57,15 @@ public class FileManager {
 	}
 	
 	/**
-	 * Creates a new instance of the FileManager class.
+	 * Initializes a new instance of the FileManager class.
 	 */
 	private FileManager(){
 		this.root = Environment.getExternalStorageDirectory();
 	}
 	
 	/**
-	 * Update the list of files that can be accessed.
-	 * @param currentList
+	 * Updates the list of files that can be accessed.
+	 * @param currentList The current list of files.
 	 */
 	public void updateFileList(FileArrayAdapter currentList){
 		// Replace the list of files
@@ -84,9 +89,9 @@ public class FileManager {
 	}
 	
 	/**
-	 * 
-	 * @param file
-	 * @param content
+	 * Writes a string to a file.
+	 * @param file The file.
+	 * @param content The content to write.
 	 */
 	public void writeFile(File file, String content){
     	try {
@@ -109,8 +114,8 @@ public class FileManager {
 	}
 	
 	/**
-	 * 
-	 * @param filename
+	 * Creates a new file.
+	 * @param filename The file to create.
 	 */
 	public Boolean writeNewFile(String filename){
 		Log.i(OpenNoteSecure.TAG, "Will be creating " + filename);
@@ -128,9 +133,9 @@ public class FileManager {
 	}
 	
 	/**
-	 * 
-	 * @param file
-	 * @return
+	 * Reads the contents of a file.
+	 * @param file The file to read.
+	 * @return The contents of the file as a string.
 	 */
 	public String readFile(File file){
 		String result = "";

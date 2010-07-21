@@ -17,40 +17,44 @@
  */
 package com.jaredhatfield.opennotesecure.EncryptionProviders;
 
+/**
+ * The exception that is thrown when encryption or decryption fails.
+ * @author Jared Hatfield
+ */
 public class EncryptionException extends Exception {
 
 	/**
-	 * 
+	 * The serial version uid.
 	 */
 	private static final long serialVersionUID = 1L;
 
 	/**
-	 * 
+	 * Implements the default encryption exception.
 	 */
 	public EncryptionException(){
 		super("Encryption Exception");
 	}
 	
 	/**
-	 * 
-	 * @param message
+	 * Implements the encryption exception.
+	 * @param message The message for the error.
 	 */
 	public EncryptionException(String message) {
 		super(message);
 	}
 	
 	/**
-	 * 
-	 * @param message
-	 * @param cause
+	 * Implements the encryption exception.
+	 * @param message The message for the error.
+	 * @param cause The cause of the exception.
 	 */
 	public EncryptionException(String message, Throwable cause) {
 		super(message, cause);
 	}
 	
 	/**
-	 * 
-	 * @param cause
+	 * Implements the encryption exception.
+	 * @param cause The cause of the exception.
 	 */
 	public EncryptionException(Throwable cause) {
 		super(cause);

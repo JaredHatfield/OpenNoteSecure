@@ -38,38 +38,46 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+/**
+ * The activity for displaying the text edit window.
+ * @author Jared Hatfield
+ */
 public class TextEditorDisplay extends Activity implements OnClickListener {
+	
 	/**
-	 * 
+	 * The file that is being edited.
 	 */
 	private File file;
 	
 	/**
-	 * 
+	 * The encryption algorithm that is being used.
 	 */
 	private String encryption;
 	
 	/**
-	 * 
+	 * The password for the file
 	 */
 	private String password;
 	
 	/**
-	 * 
+	 * The EditText that contains the decrypted text.
 	 */
 	private EditText content;
 	
 	/**
-	 * 
+	 * The button for saving the content.
 	 */
 	private Button saveButton;
 	
 	/**
-	 * 
+	 * The button for closing the window.
 	 */
 	private Button closeButton;
 	
-	/** Called when the activity is first created. */
+	/**
+	 * Called when the activity is first created.
+	 * @param savedInstanceState The bundle that contains the saved instance.
+	 */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -102,12 +110,13 @@ public class TextEditorDisplay extends Activity implements OnClickListener {
     }
     
     /**
-     * 
-     * @param view
+     * Deal with a button click.
+     * @param view The view that was clicked.
      */
 	@Override
 	public void onClick(View view) {
 		if(view.equals(this.saveButton)){
+			// The save button was clicked.
 			Log.i(OpenNoteSecure.TAG, "The save button has been clicked.");
 			
 			if(this.content.isEnabled()){
@@ -130,6 +139,7 @@ public class TextEditorDisplay extends Activity implements OnClickListener {
 			}
 		}
 		else if(view.equals(this.closeButton)){
+			// The close button was clicked.
 			Log.i(OpenNoteSecure.TAG, "The close button has been clicked.");
 			this.PerformCleanupAndClose();
 		}
@@ -143,6 +153,7 @@ public class TextEditorDisplay extends Activity implements OnClickListener {
 	 */
 	@Override
 	public void onBackPressed() {
+		// Clean up the sensitive information before closing the activity.
 	    Log.i(OpenNoteSecure.TAG, "The back button was pressed.");
 	    this.PerformCleanupAndClose();
 	    return;
@@ -150,6 +161,8 @@ public class TextEditorDisplay extends Activity implements OnClickListener {
 	
 	/**
 	 * Add the menu items to this activity.
+	 * @param menu The menu to create.
+	 * @return True if the menu was created.
 	 */
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -160,12 +173,15 @@ public class TextEditorDisplay extends Activity implements OnClickListener {
 	
 	/**
 	 * Process the clicks from the menu.
+	 * @param item The item that was clicked.
+	 * @return True if the item was clicked.
 	 */
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		// Handle item selection
 	    switch (item.getItemId()) {
 	    case R.id.menu_item_help:
+	    	// Display the help menu
 	    	try{
 				Intent i = new Intent(TextEditorDisplay.this, HelpView.class);
 				TextEditorDisplay.this.startActivity(i);
@@ -176,6 +192,7 @@ public class TextEditorDisplay extends Activity implements OnClickListener {
 			
 	        return true;
 	    default:
+	    	// No clue what happens
 	        return super.onOptionsItemSelected(item);
 	    }
 	}

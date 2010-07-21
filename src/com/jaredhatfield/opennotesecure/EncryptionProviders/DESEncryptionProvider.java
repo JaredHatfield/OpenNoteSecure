@@ -18,22 +18,30 @@
 package com.jaredhatfield.opennotesecure.EncryptionProviders;
 
 import java.security.spec.KeySpec;
+
 import javax.crypto.Cipher;
 import javax.crypto.SecretKey;
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;
+
 import android.util.Log;
+
 import com.jaredhatfield.opennotesecure.Base64;
 import com.jaredhatfield.opennotesecure.OpenNoteSecure;
 
+/**
+ * Provides the ability to encrypt and decrypt strings use DES.
+ * @author Jared Hatfield
+ */
 public class DESEncryptionProvider extends IStringEncryptor {
+	
 	/**
-	 * 
+	 * The encryption cipher.
 	 */
     Cipher ecipher;
     
     /**
-     * 
+     * The decryption cipher.
      */
     Cipher dcipher;
 
@@ -43,13 +51,13 @@ public class DESEncryptionProvider extends IStringEncryptor {
     byte[] salt = {72, 51, 82, 112, 28, 27, 87, 115};
 
     /**
-     * The itteration count.
+     * The iteration count.
      */
     int iterationCount = 10;
 
     /**
-     * 
-     * @param passPhrase
+     * Initializes a new instance of the DESEncryptionProvider.
+     * @param passPhrase The passphrase to protect the data with.
      * @throws EncryptionException
      */
     public DESEncryptionProvider(String passPhrase) throws EncryptionException {
@@ -71,7 +79,10 @@ public class DESEncryptionProvider extends IStringEncryptor {
     }
 
     /**
-     * 
+	 * Performs DES encryption on a string.
+	 * @param data The string to encrypt.
+	 * @return The encrypted string.
+	 * @throws EncryptionException
      */
     public String encryptAsBase64(String str) throws EncryptionException {
         try {
@@ -91,7 +102,10 @@ public class DESEncryptionProvider extends IStringEncryptor {
     }
 
     /**
-     * 
+	 * Performs DES decryption on a string.
+	 * @param data The string to decrypt.
+	 * @return The decrypted string.
+	 * @throws EncryptionException
      */
     public String decryptAsBase64(String str) throws EncryptionException {
         try {

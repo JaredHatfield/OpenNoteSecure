@@ -28,66 +28,71 @@ import android.util.Log;
 
 import com.jaredhatfield.opennotesecure.OpenNoteSecure;
 
+/**
+ * The abstract class that implements the methods for performing encryption and decryption.
+ * @author Jared Hatfield
+ */
 public abstract class IStringEncryptor {
+	
 	/**
-	 * 
+	 * The cipher that is used for encryption/decryption.
 	 */
 	protected Cipher cipher;
     
     /**
-     * 
+     * The secret key that is used for encryption/decryption.
      */
     protected SecretKey secretKey;
     
     /**
-     * 
+     * The iv parameter spec.
      */
     protected IvParameterSpec ivParameterSpec;
 
     /**
-     * 
+     * The cipher transformation.
      */
-    protected String CIPHER_TRANSFORMATION;
+    protected String cipherTransformation;
     
     /**
-     * 
+     * The cipher algorithm.
      */
-    protected String CIPHER_ALGORITHM;
+    protected String cipherAlgorithm;
     
     /**
-     * 
+     * The message digest algorithm.
      */
-    protected String MESSAGEDIGEST_ALGORITHM;
+    protected String messageDigestAlgorithm;
     
 	/**
-	 * 
-	 * @param data
-	 * @return
+	 * Performs encryption on a string.
+	 * @param data The string to encrypt.
+	 * @return The encrypted string.
 	 * @throws EncryptionException
 	 */
 	public abstract String encryptAsBase64(String data) throws EncryptionException;
 	
 	/**
-	 * 
-	 * @param data
-	 * @return
+	 * Performs decryption on a string.
+	 * @param data The string to decrypt.
+	 * @return The decrypted string.
 	 * @throws EncryptionException
 	 */
 	public abstract String decryptAsBase64(String data) throws EncryptionException;
 	
 	/**
-     * 
-     * @param text
-     * @return
+     * Encodes the digest for the password.
+     * @param text The password.
+     * @return The encoded digest.
      */
     protected byte[] encodeDigest(String text) {
         MessageDigest digest;
         try {
-            digest = MessageDigest.getInstance(MESSAGEDIGEST_ALGORITHM);
+            digest = MessageDigest.getInstance(messageDigestAlgorithm);
             return digest.digest(text.getBytes());
         } 
         catch (NoSuchAlgorithmException e) {
-            Log.e(OpenNoteSecure.TAG, "No such algorithm " + MESSAGEDIGEST_ALGORITHM, e);
+            Log.e(OpenNoteSecure.TAG, "No such algorithm " + messageDigestAlgorithm, e);
         }
 
         return null;

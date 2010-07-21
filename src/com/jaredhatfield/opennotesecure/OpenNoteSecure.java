@@ -35,7 +35,12 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.AdapterView.OnItemSelectedListener;
 
+/**
+ * Implements the activity for choosing an encryption algorithm and entering the password.
+ * @author Jared Hatfield
+ */
 public class OpenNoteSecure extends Activity implements OnClickListener, OnItemSelectedListener {
+	
 	/**
 	 * The tag that is used by the logger.
 	 */
@@ -47,26 +52,29 @@ public class OpenNoteSecure extends Activity implements OnClickListener, OnItemS
 	private File file;
 	
 	/**
-	 * 
+	 * The TextView for the file name.
 	 */
 	private TextView filename;
 	
 	/**
-	 * 
+	 * The Spinner for choosing the encryption algorithm.
 	 */
 	private Spinner encryption;
 	
 	/**
-	 * 
+	 * The TextView for the password.
 	 */
 	private TextView password;
 	
 	/**
-	 * 
+	 * The button for opening the file.
 	 */
 	private Button open;
 	
-    /** Called when the activity is first created. */
+    /**
+     * Called when the activity is first created.
+     * @param savedInstanceState The saved instance state.
+     */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -99,12 +107,13 @@ public class OpenNoteSecure extends Activity implements OnClickListener, OnItemS
     }
 
     /**
-     * 
-     * @param view
+     * A button was clicked.
+     * @param view The view for the button that was clicked.
      */
 	@Override
 	public void onClick(View view) {
 		if(view.equals(this.open)){
+			// The open button was clicked.
 			Log.i(OpenNoteSecure.TAG, "The open button was clicked.");
 			
 			// Display the intent that will be used to edit the file
@@ -120,23 +129,31 @@ public class OpenNoteSecure extends Activity implements OnClickListener, OnItemS
 	}
 
 	/**
-	 * 
+	 * The selected item for the spinner.
+	 * @param parent The adapter view.
+	 * @param view The view that was clicked.
+	 * @param pos The position.
+	 * @param id The unique identifier.
 	 */
 	@Override
 	public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
 		if(pos == 0){
+			// If "none" was selected, disable the password field
 			this.password.setEnabled(false);
 		}
 		else{
+			// If any other item was selected enable the password field
 			this.password.setEnabled(true);
 		}
 	}
 
 	/**
-	 * 
+	 * If nothing was selected for the spinner.
+	 * @param parent The adapter view.
 	 */
 	@Override
 	public void onNothingSelected(AdapterView<?> parent) {
+		// Disable the password field since no algorithm was selected
 		this.password.setEnabled(false);
 	}
 	
@@ -145,6 +162,7 @@ public class OpenNoteSecure extends Activity implements OnClickListener, OnItemS
 	 */
 	@Override
 	public void onBackPressed() {
+		// The view will close, but sensitive information is removed from memory first.
 	    Log.i(OpenNoteSecure.TAG, "The back button was pressed.");
 	    this.PerformCleanupAndClose();
 	    return;
@@ -152,6 +170,8 @@ public class OpenNoteSecure extends Activity implements OnClickListener, OnItemS
 	
 	/**
 	 * Add the menu items to this activity.
+	 * @param menu The menu to create.
+	 * @return True if the menu was created.
 	 */
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -162,12 +182,15 @@ public class OpenNoteSecure extends Activity implements OnClickListener, OnItemS
 	
 	/**
 	 * Process the clicks from the menu.
+	 * @param item The item that was clicked.
+	 * @return True if the item was clicked.
 	 */
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		// Handle item selection
 	    switch (item.getItemId()) {
 	    case R.id.menu_item_help:
+	    	// Display the help menu
 	    	try{
 				Intent i = new Intent(OpenNoteSecure.this, HelpView.class);
 				OpenNoteSecure.this.startActivity(i);
@@ -178,6 +201,7 @@ public class OpenNoteSecure extends Activity implements OnClickListener, OnItemS
 			
 	        return true;
 	    default:
+	    	// No clue what happens.
 	        return super.onOptionsItemSelected(item);
 	    }
 	}

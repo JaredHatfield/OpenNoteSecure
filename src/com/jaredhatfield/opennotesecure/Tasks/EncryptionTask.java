@@ -26,6 +26,10 @@ import com.jaredhatfield.opennotesecure.EncryptionProviders.EncryptionException;
 import android.os.AsyncTask;
 import android.util.Log;
 
+/**
+ * Performs encryption using an AsyncTask.
+ * @author Jared Hatfield
+ */
 public class EncryptionTask extends AsyncTask<FileTaskHolder, Void, FileTaskHolder>{
 
 	/**

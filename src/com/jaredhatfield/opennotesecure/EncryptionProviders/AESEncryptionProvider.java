@@ -17,20 +17,26 @@
  */
 package com.jaredhatfield.opennotesecure.EncryptionProviders;
 
-import java.io.IOException;
 import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
+
 import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
+
 import android.util.Log;
+
 import com.jaredhatfield.opennotesecure.Base64;
 import com.jaredhatfield.opennotesecure.OpenNoteSecure;
 
+/**
+ * Provides the ability to encrypt and decrypt strings use AES.
+ * @author Jared Hatfield
+ */
 public class AESEncryptionProvider extends IStringEncryptor {
 
 	/**
@@ -39,25 +45,25 @@ public class AESEncryptionProvider extends IStringEncryptor {
     protected static byte[] rawSecretKey = {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00};
     
     /**
-     * Constructor for AESEncryptionProvider for a specific passphrase
+     * Initializes an instance of the AESEncryptionProvider.
      * @param passphrase The phassphrase to protect the data with.
      * @throws EncryptionException 
      */
     public AESEncryptionProvider(String passphrase) throws EncryptionException {
     	// Set up the cipher
-    	this.CIPHER_TRANSFORMATION = "AES/CBC/PKCS5Padding";
-        this.CIPHER_ALGORITHM = "AES";
-        this.MESSAGEDIGEST_ALGORITHM = "MD5";
+    	this.cipherTransformation = "AES/CBC/PKCS5Padding";
+        this.cipherAlgorithm = "AES";
+        this.messageDigestAlgorithm = "MD5";
         
         // Create the password byte array
         byte[] passwordKey = encodeDigest(passphrase);
 
         // Set up the algorithm
         try {
-            cipher = Cipher.getInstance(CIPHER_TRANSFORMATION);
+            this.cipher = Cipher.getInstance(this.cipherTransformation);
         } 
         catch (NoSuchAlgorithmException e) {
-            Log.e(OpenNoteSecure.TAG, "No such algorithm " + CIPHER_ALGORITHM, e);
+            Log.e(OpenNoteSecure.TAG, "No such algorithm " + this.cipherAlgorithm, e);
             throw new EncryptionException("AESEncrpyionProvider could not be created", e);
         } 
         catch (NoSuchPaddingException e) {
@@ -66,14 +72,15 @@ public class AESEncryptionProvider extends IStringEncryptor {
         }
         
         // Finish setting up the encryption by making the secret key and iv parameters
-        secretKey = new SecretKeySpec(passwordKey, CIPHER_ALGORITHM);
+        secretKey = new SecretKeySpec(passwordKey, this.cipherAlgorithm);
         ivParameterSpec = new IvParameterSpec(rawSecretKey);
     }
     
     /**
-     * Performs the encryption on a string of data.
-     * @param data The plain text to encrypt.
-     * @return The encrypted text encoded as a Base64 string.
+	 * Performs AES encryption on a string.
+	 * @param data The string to encrypt.
+	 * @return The encrypted string.
+	 * @throws EncryptionException
      */
     public String encryptAsBase64(String data) throws EncryptionException{
     	byte[] encryptedData = encrypt(data.getBytes());
@@ -81,10 +88,10 @@ public class AESEncryptionProvider extends IStringEncryptor {
     }
     
     /**
-     * Performs the decryption on a Base64 encoded encrypted string.
-     * @param data The cipher text to decrypt.
-     * @return The plain text.
-     * @throws IOException
+	 * Performs DES decryption on a string.
+	 * @param data The string to decrypt.
+	 * @return The decrypted string.
+	 * @throws EncryptionException
      */
     public String decryptAsBase64(String data) throws EncryptionException{
     	try{
@@ -97,8 +104,8 @@ public class AESEncryptionProvider extends IStringEncryptor {
     }
 
     /**
-     * Performs the AES decryption on a byte array.
-     * @param cipherData The cipher byte array.
+     * Performs AES decryption on a byte array.
+     * @param cipherData The cipher text byte array.
      * @return The plain text byte array.
      * @throws EncryptionException 
      */
@@ -111,7 +118,7 @@ public class AESEncryptionProvider extends IStringEncryptor {
             throw new EncryptionException("AESEncrpyionProvider could not be created", e);
         } 
         catch (InvalidAlgorithmParameterException e) {
-            Log.e(OpenNoteSecure.TAG, "Invalid algorithm " + CIPHER_ALGORITHM, e);
+            Log.e(OpenNoteSecure.TAG, "Invalid algorithm " + cipherAlgorithm, e);
             throw new EncryptionException("AESEncrpyionProvider could not be created", e);
         }
 
@@ -132,9 +139,9 @@ public class AESEncryptionProvider extends IStringEncryptor {
     }
     
     /**
-     * Performs the AES encryption on a byte array.
-     * @param clearData The unencrypted byte array.
-     * @return The encrypted byte array.
+     * Performs AES encryption on a byte array.
+     * @param clearData The plain text byte array.
+     * @return The cipher text byte array.
      * @throws EncryptionException 
      */
     private byte[] encrypt(byte[] clearData) throws EncryptionException {
@@ -146,7 +153,7 @@ public class AESEncryptionProvider extends IStringEncryptor {
             throw new EncryptionException("AESEncrpyionProvider could not be created", e);
         } 
         catch (InvalidAlgorithmParameterException e) {
-            Log.e(OpenNoteSecure.TAG, "Invalid algorithm " + CIPHER_ALGORITHM, e);
+            Log.e(OpenNoteSecure.TAG, "Invalid algorithm " + cipherAlgorithm, e);
             throw new EncryptionException("AESEncrpyionProvider could not be created", e);
         }
 
