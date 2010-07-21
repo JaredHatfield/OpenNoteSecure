@@ -83,14 +83,6 @@ public class DecryptionTask extends AsyncTask<FileTaskHolder, Void, FileTaskHold
 			}
 		}
 		
-		// Wait so it looks like the task takes some time to complete
-		try {
-			Thread.sleep(1000);
-		}
-		catch (InterruptedException e) {
-			Log.e(OpenNoteSecure.TAG, e.getMessage());
-		}
-		
 		return holder;
 	}
 	
