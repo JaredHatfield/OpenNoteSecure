@@ -1,7 +1,7 @@
 /*
- * OpenNoteSecure is an Android application for reading and writing encrypted
- * text files to an SD card.
- * Copyright (C) 2010  Jared Hatfield
+ * OpenNoteSecure is an Android application for reading and writing
+ * encrypted text files to an SD card.
+ * Copyright (C) 2010 Jared Hatfield
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
@@ -279,16 +279,19 @@ public class FileBrowser extends ListActivity implements OnItemClickListener, On
 	        		 Boolean result = FileManager.Instance().writeNewFile(filename);
 	        		 if(!result){
 	        			 // If the file was not created we mark this down
+	        			 Log.i(OpenNoteSecure.TAG, "File creation failed.");
 	        			 filename = null;
 	        		 }
 	        	 }
 	        	 else{
 	        		 // Do not create a file that has no name
+	        		 Log.i(OpenNoteSecure.TAG, "File name left blank.");
 	        		 filename = null;
 	        	 }
 	         }
 	         catch(Exception e){
 	        	 Log.e(OpenNoteSecure.TAG, e.getMessage(), e);
+	        	 Log.i(OpenNoteSecure.TAG, e.getMessage());
 	        	 filename = null;
 	         }
 	         
