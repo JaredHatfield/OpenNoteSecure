@@ -21,35 +21,39 @@ import android.widget.TextView;
 
 /**
  * The holder for a file.
+ * 
  * @author Jared Hatfield
  */
 public class FileViewHolder {
-	
-	/**
-	 * The text representation of the file.
-	 */
-	private TextView text;
-	
-	/**
-	 * Initializes a new instance of FileViewHolder.
-	 */
-	public FileViewHolder(){
-		this.text = null;
-	}
-	
-	/**
-	 * Gets the text.
-	 * @return The text.
-	 */
-	public TextView getText(){
-		return this.text;
-	}
-	
-	/**
-	 * Sets the text.
-	 * @param text The new text.
-	 */
-	public void setText(TextView text){
-		this.text = text;
-	}
+
+    /**
+     * The text representation of the file.
+     */
+    private TextView text;
+
+    /**
+     * Initializes a new instance of FileViewHolder.
+     */
+    public FileViewHolder() {
+        this.text = null;
+    }
+
+    /**
+     * Gets the text.
+     * 
+     * @return The text.
+     */
+    public TextView getText() {
+        return this.text;
+    }
+
+    /**
+     * Sets the text.
+     * 
+     * @param text
+     *            The new text.
+     */
+    public void setText(TextView text) {
+        this.text = text;
+    }
 }

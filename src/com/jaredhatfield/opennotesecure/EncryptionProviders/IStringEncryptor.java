@@ -29,21 +29,23 @@ import android.util.Log;
 import com.jaredhatfield.opennotesecure.OpenNoteSecure;
 
 /**
- * The abstract class that implements the methods for performing encryption and decryption.
+ * The abstract class that implements the methods for performing encryption and
+ * decryption.
+ * 
  * @author Jared Hatfield
  */
 public abstract class IStringEncryptor {
-	
-	/**
-	 * The cipher that is used for encryption/decryption.
-	 */
-	protected Cipher cipher;
-    
+
+    /**
+     * The cipher that is used for encryption/decryption.
+     */
+    protected Cipher cipher;
+
     /**
      * The secret key that is used for encryption/decryption.
      */
     protected SecretKey secretKey;
-    
+
     /**
      * The iv parameter spec.
      */
@@ -53,36 +55,44 @@ public abstract class IStringEncryptor {
      * The cipher transformation.
      */
     protected String cipherTransformation;
-    
+
     /**
      * The cipher algorithm.
      */
     protected String cipherAlgorithm;
-    
+
     /**
      * The message digest algorithm.
      */
     protected String messageDigestAlgorithm;
-    
-	/**
-	 * Performs encryption on a string.
-	 * @param data The string to encrypt.
-	 * @return The encrypted string.
-	 * @throws EncryptionException
-	 */
-	public abstract String encryptAsBase64(String data) throws EncryptionException;
-	
-	/**
-	 * Performs decryption on a string.
-	 * @param data The string to decrypt.
-	 * @return The decrypted string.
-	 * @throws EncryptionException
-	 */
-	public abstract String decryptAsBase64(String data) throws EncryptionException;
-	
-	/**
+
+    /**
+     * Performs encryption on a string.
+     * 
+     * @param data
+     *            The string to encrypt.
+     * @return The encrypted string.
+     * @throws EncryptionException
+     */
+    public abstract String encryptAsBase64(String data)
+            throws EncryptionException;
+
+    /**
+     * Performs decryption on a string.
+     * 
+     * @param data
+     *            The string to decrypt.
+     * @return The decrypted string.
+     * @throws EncryptionException
+     */
+    public abstract String decryptAsBase64(String data)
+            throws EncryptionException;
+
+    /**
      * Encodes the digest for the password.
-     * @param text The password.
+     * 
+     * @param text
+     *            The password.
      * @return The encoded digest.
      */
     protected byte[] encodeDigest(String text) {
@@ -90,9 +100,9 @@ public abstract class IStringEncryptor {
         try {
             digest = MessageDigest.getInstance(messageDigestAlgorithm);
             return digest.digest(text.getBytes());
-        } 
-        catch (NoSuchAlgorithmException e) {
-            Log.e(OpenNoteSecure.TAG, "No such algorithm " + messageDigestAlgorithm, e);
+        } catch (NoSuchAlgorithmException e) {
+            Log.e(OpenNoteSecure.TAG, "No such algorithm "
+                    + messageDigestAlgorithm, e);
         }
 
         return null;

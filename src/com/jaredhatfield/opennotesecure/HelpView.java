@@ -23,21 +23,24 @@ import android.webkit.WebView;
 
 /**
  * The view that displays the help information.
+ * 
  * @author Jared Hatfield
  */
 public class HelpView extends Activity {
-	
-	/**
-	 * Called when the activity is first created.
-	 * @param savedInstanceState The saved instance state.
-	 */
+
+    /**
+     * Called when the activity is first created.
+     * 
+     * @param savedInstanceState
+     *            The saved instance state.
+     */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.help);
-        
+
         // Load the HTML from the local html file
-        WebView wv = (WebView) findViewById(R.id.webview_help);	    
-	    wv.loadUrl("file:///android_asset/help.html");
+        WebView wv = (WebView) findViewById(R.id.webview_help);
+        wv.loadUrl("file:///android_asset/help.html");
     }
 }

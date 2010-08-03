@@ -17,69 +17,69 @@
  */
 package com.jaredhatfield.opennotesecure.Tasks;
 
+import android.os.AsyncTask;
+import android.util.Log;
+
 import com.jaredhatfield.opennotesecure.FileManager;
 import com.jaredhatfield.opennotesecure.OpenNoteSecure;
 import com.jaredhatfield.opennotesecure.EncryptionProviders.AESEncryptionProvider;
 import com.jaredhatfield.opennotesecure.EncryptionProviders.DESEncryptionProvider;
 import com.jaredhatfield.opennotesecure.EncryptionProviders.EncryptionException;
 
-import android.os.AsyncTask;
-import android.util.Log;
-
 /**
  * Performs encryption using an AsyncTask.
+ * 
  * @author Jared Hatfield
  */
-public class EncryptionTask extends AsyncTask<FileTaskHolder, Void, FileTaskHolder>{
+public class EncryptionTask extends
+        AsyncTask<FileTaskHolder, Void, FileTaskHolder> {
 
-	/**
-	 * Perform the task of encrypting and writing out the file.
-	 */
-	@Override
-	protected FileTaskHolder doInBackground(FileTaskHolder... params) {
-		FileTaskHolder holder = params[0];
-		
-		// Encrypt and write out the file.
-		if(holder.getEncryption().equals("None")){
-			Log.i(OpenNoteSecure.TAG, "Encrypting with Algorithm: None");
-			FileManager.Instance().writeFile(holder.getFile(), holder.getEditTextContent().getText().toString());
-		}
-		else if(holder.getEncryption().equals("AES")){
-			Log.i(OpenNoteSecure.TAG, "Encrypting with Algorithm: AES");
-			String plaintext = holder.getEditTextContent().getText().toString();
-			try {
-				AESEncryptionProvider aes = new AESEncryptionProvider(holder.getPassword());
-				String ciphertext = aes.encryptAsBase64(plaintext);
-				FileManager.Instance().writeFile(holder.getFile(), ciphertext);
-			}
-			catch (EncryptionException e) {
-				// It didn't work!!
-				Log.e(OpenNoteSecure.TAG, e.getMessage());
-			}
-		}
-		else if(holder.getEncryption().equals("DES")){
-			Log.i(OpenNoteSecure.TAG, "Encrypting with Algorithm: DES");
-			String plaintext = holder.getEditTextContent().getText().toString();
-			try{
-				DESEncryptionProvider des = new DESEncryptionProvider(holder.getPassword());
-				String ciphertext = des.encryptAsBase64(plaintext);
-				FileManager.Instance().writeFile(holder.getFile(), ciphertext);
-			}
-			catch (EncryptionException e) {
-				// It didn't work!!
-				Log.e(OpenNoteSecure.TAG, e.getMessage());
-			}
-		}
-		
-		return holder;
-	}
-	
-	/**
-	 * Dismiss the dialog after the task is complete.
-	 */
-	@Override
-    protected void onPostExecute(FileTaskHolder holder)
-    {
-		holder.getDialog().dismiss();
+    /**
+     * Perform the task of encrypting and writing out the file.
+     */
+    @Override
+    protected FileTaskHolder doInBackground(FileTaskHolder... params) {
+        FileTaskHolder holder = params[0];
+
+        // Encrypt and write out the file.
+        if (holder.getEncryption().equals("None")) {
+            Log.i(OpenNoteSecure.TAG, "Encrypting with Algorithm: None");
+            FileManager.Instance().writeFile(holder.getFile(),
+                    holder.getEditTextContent().getText().toString());
+        } else if (holder.getEncryption().equals("AES")) {
+            Log.i(OpenNoteSecure.TAG, "Encrypting with Algorithm: AES");
+            String plaintext = holder.getEditTextContent().getText().toString();
+            try {
+                AESEncryptionProvider aes = new AESEncryptionProvider(holder
+                        .getPassword());
+                String ciphertext = aes.encryptAsBase64(plaintext);
+                FileManager.Instance().writeFile(holder.getFile(), ciphertext);
+            } catch (EncryptionException e) {
+                // It didn't work!!
+                Log.e(OpenNoteSecure.TAG, e.getMessage());
+            }
+        } else if (holder.getEncryption().equals("DES")) {
+            Log.i(OpenNoteSecure.TAG, "Encrypting with Algorithm: DES");
+            String plaintext = holder.getEditTextContent().getText().toString();
+            try {
+                DESEncryptionProvider des = new DESEncryptionProvider(holder
+                        .getPassword());
+                String ciphertext = des.encryptAsBase64(plaintext);
+                FileManager.Instance().writeFile(holder.getFile(), ciphertext);
+            } catch (EncryptionException e) {
+                // It didn't work!!
+                Log.e(OpenNoteSecure.TAG, e.getMessage());
+            }
+        }
+
+        return holder;
+    }
+
+    /**
+     * Dismiss the dialog after the task is complete.
+     */
+    @Override
+    protected void onPostExecute(FileTaskHolder holder) {
+        holder.getDialog().dismiss();
     }
 }

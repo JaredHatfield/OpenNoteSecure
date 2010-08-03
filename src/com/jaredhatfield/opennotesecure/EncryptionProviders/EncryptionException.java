@@ -19,44 +19,52 @@ package com.jaredhatfield.opennotesecure.EncryptionProviders;
 
 /**
  * The exception that is thrown when encryption or decryption fails.
+ * 
  * @author Jared Hatfield
  */
 public class EncryptionException extends Exception {
 
-	/**
-	 * The serial version uid.
-	 */
-	private static final long serialVersionUID = 1L;
+    /**
+     * The serial version uid.
+     */
+    private static final long serialVersionUID = 1L;
 
-	/**
-	 * Implements the default encryption exception.
-	 */
-	public EncryptionException(){
-		super("Encryption Exception");
-	}
-	
-	/**
-	 * Implements the encryption exception.
-	 * @param message The message for the error.
-	 */
-	public EncryptionException(String message) {
-		super(message);
-	}
-	
-	/**
-	 * Implements the encryption exception.
-	 * @param message The message for the error.
-	 * @param cause The cause of the exception.
-	 */
-	public EncryptionException(String message, Throwable cause) {
-		super(message, cause);
-	}
-	
-	/**
-	 * Implements the encryption exception.
-	 * @param cause The cause of the exception.
-	 */
-	public EncryptionException(Throwable cause) {
-		super(cause);
-	}
+    /**
+     * Implements the default encryption exception.
+     */
+    public EncryptionException() {
+        super("Encryption Exception");
+    }
+
+    /**
+     * Implements the encryption exception.
+     * 
+     * @param message
+     *            The message for the error.
+     */
+    public EncryptionException(String message) {
+        super(message);
+    }
+
+    /**
+     * Implements the encryption exception.
+     * 
+     * @param message
+     *            The message for the error.
+     * @param cause
+     *            The cause of the exception.
+     */
+    public EncryptionException(String message, Throwable cause) {
+        super(message, cause);
+    }
+
+    /**
+     * Implements the encryption exception.
+     * 
+     * @param cause
+     *            The cause of the exception.
+     */
+    public EncryptionException(Throwable cause) {
+        super(cause);
+    }
 }

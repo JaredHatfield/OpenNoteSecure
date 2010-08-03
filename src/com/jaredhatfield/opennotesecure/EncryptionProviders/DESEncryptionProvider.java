@@ -31,15 +31,16 @@ import com.jaredhatfield.opennotesecure.OpenNoteSecure;
 
 /**
  * Provides the ability to encrypt and decrypt strings use DES.
+ * 
  * @author Jared Hatfield
  */
 public class DESEncryptionProvider extends IStringEncryptor {
-	
-	/**
-	 * The encryption cipher.
-	 */
+
+    /**
+     * The encryption cipher.
+     */
     Cipher ecipher;
-    
+
     /**
      * The decryption cipher.
      */
@@ -48,7 +49,7 @@ public class DESEncryptionProvider extends IStringEncryptor {
     /**
      * 8 bytes of Salt.
      */
-    byte[] salt = {72, 51, 82, 112, 28, 27, 87, 115};
+    byte[] salt = { 72, 51, 82, 112, 28, 27, 87, 115 };
 
     /**
      * The iteration count.
@@ -57,32 +58,38 @@ public class DESEncryptionProvider extends IStringEncryptor {
 
     /**
      * Initializes a new instance of the DESEncryptionProvider.
-     * @param passPhrase The passphrase to protect the data with.
+     * 
+     * @param passPhrase
+     *            The passphrase to protect the data with.
      * @throws EncryptionException
      */
     public DESEncryptionProvider(String passPhrase) throws EncryptionException {
         try {
             // Create the key
-            KeySpec keySpec = new PBEKeySpec(passPhrase.toCharArray(), salt, iterationCount);
-            SecretKey key = SecretKeyFactory.getInstance("PBEWithMD5AndDES").generateSecret(keySpec);
+            KeySpec keySpec = new PBEKeySpec(passPhrase.toCharArray(), salt,
+                    iterationCount);
+            SecretKey key = SecretKeyFactory.getInstance("PBEWithMD5AndDES")
+                    .generateSecret(keySpec);
             ecipher = Cipher.getInstance(key.getAlgorithm());
             dcipher = Cipher.getInstance(key.getAlgorithm());
-            
+
             // Create the ciphers
             ecipher.init(Cipher.ENCRYPT_MODE, key);
             dcipher.init(Cipher.DECRYPT_MODE, key);
-        } 
-        catch (Exception e){
-        	Log.e(OpenNoteSecure.TAG, "Failed to created DES encryptor.", e);
-            throw new EncryptionException("DESEncrpyionProvider could not be created", e);
+        } catch (Exception e) {
+            Log.e(OpenNoteSecure.TAG, "Failed to created DES encryptor.", e);
+            throw new EncryptionException(
+                    "DESEncrpyionProvider could not be created", e);
         }
     }
 
     /**
-	 * Performs DES encryption on a string.
-	 * @param data The string to encrypt.
-	 * @return The encrypted string.
-	 * @throws EncryptionException
+     * Performs DES encryption on a string.
+     * 
+     * @param data
+     *            The string to encrypt.
+     * @return The encrypted string.
+     * @throws EncryptionException
      */
     public String encryptAsBase64(String str) throws EncryptionException {
         try {
@@ -94,33 +101,35 @@ public class DESEncryptionProvider extends IStringEncryptor {
 
             // Encode bytes to base64 to get a string
             return Base64.encodeBytes(enc);
-        } 
-        catch (Exception e){
-        	Log.e(OpenNoteSecure.TAG, "Failed to created DES encryptor.", e);
-            throw new EncryptionException("DESEncrpyionProvider could not be created", e);
+        } catch (Exception e) {
+            Log.e(OpenNoteSecure.TAG, "Failed to created DES encryptor.", e);
+            throw new EncryptionException(
+                    "DESEncrpyionProvider could not be created", e);
         }
     }
 
     /**
-	 * Performs DES decryption on a string.
-	 * @param data The string to decrypt.
-	 * @return The decrypted string.
-	 * @throws EncryptionException
+     * Performs DES decryption on a string.
+     * 
+     * @param data
+     *            The string to decrypt.
+     * @return The decrypted string.
+     * @throws EncryptionException
      */
     public String decryptAsBase64(String str) throws EncryptionException {
         try {
             // Decode base64 to get bytes
-        	byte[] dec = Base64.decode(str);
-            
+            byte[] dec = Base64.decode(str);
+
             // Decrypt
             byte[] utf8 = dcipher.doFinal(dec);
 
             // Decode using utf-8
             return new String(utf8, "UTF8");
-        } 
-        catch (Exception e){
-        	Log.e(OpenNoteSecure.TAG, "Failed to created DES encryptor.", e);
-            throw new EncryptionException("DESEncrpyionProvider could not be created", e);
+        } catch (Exception e) {
+            Log.e(OpenNoteSecure.TAG, "Failed to created DES encryptor.", e);
+            throw new EncryptionException(
+                    "DESEncrpyionProvider could not be created", e);
         }
     }
 }

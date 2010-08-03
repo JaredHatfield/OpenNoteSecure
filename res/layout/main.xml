@@ -17,57 +17,58 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  -->
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout 
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     >
-	<TextView 
-		android:text="@string/app_header" 
-		android:id="@+id/TextViewHeader" 
-		android:layout_width="fill_parent" 
-		android:layout_height="wrap_content"
-		android:enabled="false"
-		android:textSize="24sp"
-		android:textStyle="bold"
-		android:gravity="center_vertical|center_horizontal"
-		/>
-	<TextView 
-		android:text="@string/text_file" 
-		android:layout_width="wrap_content" 
-		android:layout_height="wrap_content"
-		/>
-	<EditText
-		android:id="@+id/EditTextFileName" 
-		android:layout_width="fill_parent" 
-		android:layout_height="wrap_content"
-		/>
-	<TextView 
-		android:text="@string/text_algorithm" 
-		android:layout_width="wrap_content" 
-		android:layout_height="wrap_content"
-		/>
-	<Spinner 
-		android:id="@+id/SpinnerAlgorithm" 
-		android:layout_width="fill_parent" 
-		android:layout_height="wrap_content"
-		/>
-	<TextView 
-		android:text="@string/text_password" 
-		android:layout_width="wrap_content" 
-		android:layout_height="wrap_content"
-		/>
-	<EditText
-		android:id="@+id/EditTextPassword" 
-		android:layout_width="fill_parent" 
-		android:layout_height="wrap_content"
-		android:password="true"
-		android:enabled="false"
-		/>
-	<Button 
-		android:text="@string/button_open" 
-		android:id="@+id/ButtonOpen" 
-		android:layout_width="wrap_content" 
-		android:layout_height="wrap_content"
-		/>
+    <TextView 
+        android:text="@string/app_header" 
+        android:id="@+id/TextViewHeader" 
+        android:layout_width="fill_parent" 
+        android:layout_height="wrap_content"
+        android:enabled="false"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:gravity="center_vertical|center_horizontal"
+        />
+    <TextView 
+        android:text="@string/text_file" 
+        android:layout_width="wrap_content" 
+        android:layout_height="wrap_content"
+        />
+    <EditText
+        android:id="@+id/EditTextFileName" 
+        android:layout_width="fill_parent" 
+        android:layout_height="wrap_content"
+        />
+    <TextView 
+        android:text="@string/text_algorithm" 
+        android:layout_width="wrap_content" 
+        android:layout_height="wrap_content"
+        />
+    <Spinner 
+        android:id="@+id/SpinnerAlgorithm" 
+        android:layout_width="fill_parent" 
+        android:layout_height="wrap_content"
+        />
+    <TextView 
+        android:text="@string/text_password" 
+        android:layout_width="wrap_content" 
+        android:layout_height="wrap_content"
+        />
+    <EditText
+        android:id="@+id/EditTextPassword" 
+        android:layout_width="fill_parent" 
+        android:layout_height="wrap_content"
+        android:password="true"
+        android:enabled="false"
+        />
+    <Button 
+        android:text="@string/button_open" 
+        android:id="@+id/ButtonOpen" 
+        android:layout_width="wrap_content" 
+        android:layout_height="wrap_content"
+        />
 </LinearLayout>

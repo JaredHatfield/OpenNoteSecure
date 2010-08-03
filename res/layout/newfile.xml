@@ -18,18 +18,18 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  -->
 <LinearLayout
-  xmlns:android="http://schemas.android.com/apk/res/android"
-  android:layout_width="fill_parent"
-  android:layout_height="wrap_content">
-	<EditText 
-		android:id="@+id/EditTextNewFile" 
-		android:layout_width="200dip" 
-		android:layout_height="wrap_content"
-	/>
-	<Button 
-		android:text="@string/button_newfile" 
-		android:id="@+id/ButtonNewFile" 
-		android:layout_width="wrap_content" 
-		android:layout_height="wrap_content"
-		/>
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content">
+    <EditText 
+        android:id="@+id/EditTextNewFile" 
+        android:layout_width="200dip" 
+        android:layout_height="wrap_content"
+    />
+    <Button 
+        android:text="@string/button_newfile" 
+        android:id="@+id/ButtonNewFile" 
+        android:layout_width="wrap_content" 
+        android:layout_height="wrap_content"
+        />
 </LinearLayout>

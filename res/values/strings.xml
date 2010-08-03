@@ -29,13 +29,10 @@
     <string name="text_algorithm">Encryption Algorithm:</string>
     <string name="text_password">Password:</string>
     <string-array name="encrytion_options">
-    	<item>None</item>
+        <item>None</item>
         <item>AES</item>
         <item>DES</item>
     </string-array>
-	<string name="menu_help">Help</string>
-	
-	
-<string name="menu_delete">Delete</string>
-
+    <string name="menu_help">Help</string>
+    <string name="menu_delete">Delete</string>
 </resources>
