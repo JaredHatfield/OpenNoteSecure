@@ -18,13 +18,13 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  -->
 <resources>
-    <string name="hello">Hello World, OpenNoteSecure!</string>
     <string name="app_name">OpenNoteSecure</string>
+    <string name="app_header">OpenNoteSecure</string>
     <string name="button_save">Save Content</string>
     <string name="button_close">Close</string>
-    <string name="app_header">Open Note Secure</string>
     <string name="button_newfile">New File</string>
     <string name="button_open">Open File</string>
+    <string name="exit">Exit</string>
     <string name="text_file">File Name:</string>
     <string name="text_algorithm">Encryption Algorithm:</string>
     <string name="text_password">Password:</string>
@@ -35,4 +35,13 @@
     </string-array>
     <string name="menu_help">Help</string>
     <string name="menu_delete">Delete</string>
+    <string name="dialog_nosd">No SD card was found.</string>
+    <string name="dialog_save">Saving. Please wait...</string>
+    <string name="dialog_decrypt">Decrypting. Please wait...</string>
+    <string name="toast_error">Error: </string>
+    <string name="toast_deleted">Deleted</string>
+    <string name="toast_not_deleted"></string>
+    <string name="toast_not_created">File was not created.</string>
+    <string name="toast_created">Created</string>
+    <string name="toast_save_disabled">Save disabled.</string>
 </resources>

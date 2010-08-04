@@ -71,7 +71,7 @@ public class FileManager {
      * @param currentList
      *            The current list of files.
      */
-    public void updateFileList(FileArrayAdapter currentList) {
+    public boolean updateFileList(FileArrayAdapter currentList) {
         // Replace the list of files
         currentList.clear();
         if (this.root.canRead()) {
@@ -89,6 +89,9 @@ public class FileManager {
             }
 
             currentList.notifyDataSetChanged();
+            return true;
+        } else {
+            return false;
         }
     }
 

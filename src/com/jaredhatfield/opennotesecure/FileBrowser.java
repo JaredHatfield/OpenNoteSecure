@@ -20,8 +20,10 @@ package com.jaredhatfield.opennotesecure;
 import java.io.File;
 import java.util.ArrayList;
 
+import android.app.AlertDialog;
 import android.app.ListActivity;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -76,10 +78,10 @@ public class FileBrowser extends ListActivity implements OnItemClickListener,
      */
     @Override
     public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
         this.content = new FileArrayAdapter(this,
                 android.R.layout.simple_list_item_1, new ArrayList<File>());
-        FileManager.Instance().updateFileList(this.content);
-        super.onCreate(savedInstanceState);
+        boolean canRead = FileManager.Instance().updateFileList(this.content);
 
         // Get the layout inflater
         mInflater = (LayoutInflater) getApplicationContext().getSystemService(
@@ -100,6 +102,23 @@ public class FileBrowser extends ListActivity implements OnItemClickListener,
 
         // Register all list items for the context menu
         registerForContextMenu(getListView());
+
+        // If we can't read the SD card, then display a notice to the user
+        if (!canRead) {
+            // If there is no SD card all the user can do is exit
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setMessage(this.getString(R.string.dialog_nosd))
+                    .setCancelable(false).setPositiveButton(
+                            this.getString(R.string.exit),
+                            new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog,
+                                        int id) {
+                                    FileBrowser.this.finish();
+                                }
+                            });
+            AlertDialog alert = builder.create();
+            alert.show();
+        }
     }
 
     /**
@@ -278,13 +297,21 @@ public class FileBrowser extends ListActivity implements OnItemClickListener,
             Log.i(OpenNoteSecure.TAG, "Delete onPostExecute");
             if (filename != null) {
                 // The file was created, notify the user and update the list
-                Toast.makeText(getApplicationContext(), "Deleted " + filename,
-                        Toast.LENGTH_SHORT).show();
+                Toast.makeText(
+                        getApplicationContext(),
+                        FileBrowser.this.getString(R.string.toast_deleted)
+                                + " " + filename, Toast.LENGTH_SHORT).show();
                 FileManager.Instance().updateFileList(content);
             } else {
                 // The file was not created successfully
-                Toast.makeText(getApplicationContext(),
-                        "Error: " + filename + " not deleted.",
+                Toast.makeText(
+                        getApplicationContext(),
+                        FileBrowser.this.getString(R.string.toast_error)
+                                + " "
+                                + filename
+                                + " "
+                                + FileBrowser.this
+                                        .getString(R.string.toast_not_deleted),
                         Toast.LENGTH_SHORT).show();
             }
         }
@@ -339,15 +366,18 @@ public class FileBrowser extends ListActivity implements OnItemClickListener,
             if (filename == null) {
                 // The file was not created
                 Toast.makeText(getApplicationContext(),
-                        "File was not created.", Toast.LENGTH_SHORT).show();
+                        FileBrowser.this.getString(R.string.toast_not_created),
+                        Toast.LENGTH_SHORT).show();
             } else {
                 // The file was created
                 newFileButton.requestFocus();
                 newFileEditText.getText().clear();
 
                 // Notify the user the file was created
-                Toast.makeText(getApplicationContext(), "Created " + filename,
-                        Toast.LENGTH_SHORT).show();
+                Toast.makeText(
+                        getApplicationContext(),
+                        FileBrowser.this.getString(R.string.toast_created)
+                                + " " + filename, Toast.LENGTH_SHORT).show();
 
                 // Update the array array adapter
                 FileManager.Instance().updateFileList(content);

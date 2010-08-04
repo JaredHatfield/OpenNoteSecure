@@ -21,7 +21,6 @@ import java.io.File;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -94,7 +93,7 @@ public class TextEditorDisplay extends Activity implements OnClickListener {
         Log.i(OpenNoteSecure.TAG, "File: " + this.file.getPath());
         Log.i(OpenNoteSecure.TAG, "Encryption: " + this.encryption);
         Log.i(OpenNoteSecure.TAG, "Password: " + this.password); // TODO: Remove
-                                                                 // this line!
+        // this line!
 
         // Get all of the local GUI elements
         this.content = (EditText) this.findViewById(R.id.EditTextContent);
@@ -105,7 +104,7 @@ public class TextEditorDisplay extends Activity implements OnClickListener {
 
         // Display the progress dialog
         ProgressDialog dialog = ProgressDialog.show(TextEditorDisplay.this, "",
-                "Decrypting. Please wait...", true);
+                this.getString(R.string.dialog_decrypt), true);
         dialog.setCancelable(false);
         dialog.show();
 
@@ -130,8 +129,8 @@ public class TextEditorDisplay extends Activity implements OnClickListener {
             if (this.content.isEnabled()) {
                 // Display the progress dialog.
                 ProgressDialog dialog = ProgressDialog.show(
-                        TextEditorDisplay.this, "", "Saving. Please wait...",
-                        true);
+                        TextEditorDisplay.this, "", this
+                                .getString(R.string.dialog_save), true);
                 dialog.setCancelable(false);
                 dialog.show();
 
@@ -140,11 +139,9 @@ public class TextEditorDisplay extends Activity implements OnClickListener {
                         this.encryption, this.password, dialog, this.content);
                 new EncryptionTask().execute(holder);
             } else {
-                Context context = getApplicationContext();
-                CharSequence text = "Save disabled.";
-                int duration = Toast.LENGTH_SHORT;
-
-                Toast toast = Toast.makeText(context, text, duration);
+                Toast toast = Toast.makeText(getApplicationContext(), this
+                        .getString(R.string.toast_save_disabled),
+                        Toast.LENGTH_SHORT);
                 toast.show();
             }
         } else if (view.equals(this.closeButton)) {
